@@ -12,7 +12,7 @@ local bullet_box = {
 
 function battle_engine.update(i)
     -- pretend there's stuff here
-    bullet_box.rotation = bullet_box.rotation + i
+    bullet_box.width = bullet_box.width - i * 5
 end
 
 local function draw_bullet_box()
