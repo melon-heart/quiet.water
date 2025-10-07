@@ -54,7 +54,12 @@ local function draw_bullet_box()
     love.graphics.pop()
 end
 
+local function draw_action_ui()
+    love.graphics.draw(action_ui.fight.img, action_ui.fight.quad1, 100, 400)
+end
+
 function battle_engine.draw()
+    draw_action_ui()
     draw_bullet_box()
 end
 
