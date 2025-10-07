@@ -9,10 +9,11 @@ function player.load()
     player.exp = 0
     player.g = 0
 
-    player.s = 0
-    player.se = 0
-    player.x = 0
-    player.y = 0
+    player.i = 0 -- selection
+    player.ii = 0 -- selection part 2!
+    player.iii = 0 -- rest are placeholder i'll need later
+    player.iv = 0
+    player.v = 0
 end
 
 function player.update(i, ii, iii, iv, v) -- i = hp amount changed, ii = exp gained, iii = g gained, iv = item gained, v = item eaten
