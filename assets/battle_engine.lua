@@ -10,9 +10,28 @@ local bullet_box = {
     rotation = 0,    -- rotation
 }
 
+local action_ui = {
+    fight = {
+        img = love.graphics.newImage("assets/battle_assets/ui/0.png"),
+    },
+    act = {
+        img = love.graphics.newImage("assets/battle_assets/ui/1.png"),
+    },
+    item = {
+        img = love.graphics.newImage("assets/battle_assets/ui/2.png"),
+    },
+    mercy = {
+        img = love.graphics.newImage("assets/battle_assets/ui/3.png"),
+    }
+}
+
+for _, v in pairs(action_ui) do
+    v.quad1 = love.graphics.newQuad(0, 0, 110, 42, v.img:getDimensions())
+    v.quad2 = love.graphics.newQuad(110, 0, 110, 42, v.img:getDimensions())
+end
+
 function battle_engine.update(i)
     -- pretend there's stuff here
-    bullet_box.width = bullet_box.width - i * 5
 end
 
 local function draw_bullet_box()
