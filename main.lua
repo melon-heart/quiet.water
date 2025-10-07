@@ -11,6 +11,21 @@ scene = {
     iv = false -- this has no meaning yet.
 }
 
+fonts = {}
+
+function love.load()
+    fonts["8bitoperator_jve"] = love.graphics.newFont("assets/fonts/8bitoperator_jve.ttf")
+    fonts["dotumche"] = love.graphics.newFont("assets/fonts/dotumche.ttf")
+    fonts["determination-mono"] = love.graphics.newFont("assets/fonts/determination-mono.ttf")
+    fonts["crypto'morrow"] = love.graphics.newFont("assets/fonts/crypto'morrow.ttf")
+    fonts["papyrus"] = love.graphics.newFont("assets/fonts/papyrus.ttf")
+    fonts["hachicro"] = love.graphics.newFont("assets/fonts/hachicro.ttf")
+    fonts["hp"] = love.graphics.newFont("assets/fonts/hp.ttf")
+    fonts["sans"] = love.graphics.newFont("assets/fonts/sans.ttf")
+    fonts["ja_JF-Dot-Shinonome14"] = love.graphics.newFont("assets/fonts/ja/JF-Dot-Shinonome14.ttf")
+    fonts["ja_TanukiMagic"] = love.graphics.newFont("assets/fonts/ja/TanukiMagic.ttf")
+end
+
 function love.update(dt)
     if scene.i == "battle" then
         battle_engine.update(dt)
@@ -20,6 +35,7 @@ function love.update(dt)
 end
 
 function love.draw()
+    love.graphics.clear(0/255, 80/255, 80/255)
     -- love.graphics.draw(love.graphics.newImage("8.png"))
     if scene.i == "battle" then
         battle_engine.draw()

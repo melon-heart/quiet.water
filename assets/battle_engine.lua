@@ -55,7 +55,11 @@ local function draw_bullet_box()
 end
 
 local function draw_action_ui()
-    love.graphics.draw(action_ui.fight.img, action_ui.fight.quad1, 100, 400)
+    local actions = { "fight", "act", "item", "mercy" }
+    for i, name in ipairs(actions) do
+        local btn = action_ui[name]
+        love.graphics.draw(btn.img, btn.quad1, ((i-1) * 157) + 29, 432)
+    end
 end
 
 function battle_engine.draw()
