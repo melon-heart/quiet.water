@@ -1,6 +1,7 @@
 love.graphics.setDefaultFilter('nearest', 'nearest')
 
 player = require("player")
+key_state = require("assets.key_state")
 
 battle_engine = require("assets.battle_engine")
 --overworld_engine = require("assets.overworld_engine")
@@ -34,6 +35,8 @@ function love.load()
 end
 
 function love.update(dt)
+    key_state.update()
+
     if scene.i == "battle" then
         battle_engine.update(dt)
     elseif scene.i == "overworld" then

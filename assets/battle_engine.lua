@@ -1,6 +1,7 @@
 -- battle_engine.lua
 local battle_engine = {}
 local enemy = nil
+local key_state = require("assets.key_state")
 
 local function load_enemy() -- thanks to Asuls!
     local enemy_module = ("assets.battle_assets.enemies." .. scene.ii .. "." .. scene.ii)
@@ -25,6 +26,11 @@ local action_ui = {
 }
 
 function battle_engine.load()
+
+    -- reset selections
+    player.i = 0
+    player.ii = 0
+
     for name, _ in pairs(action_ui) do
         local path = "assets/battle_assets/ui/"
         local idx = ({fight = "0.png", act = "1.png", item = "2.png", mercy = "3.png"})[name]
@@ -51,9 +57,13 @@ function battle_engine.load()
 end
 
 function battle_engine.update(i) -- i = dt
+    key_state.update()
+
     local skip = false
-    if love and love.keyboard and love.keyboard.isDown then
-        skip = love.keyboard.isDown("x")
+    if key_state.x.just_pressed then
+        skip = true
+    else
+        skip = false
     end
 
     if writers then
