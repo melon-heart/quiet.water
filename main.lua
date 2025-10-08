@@ -1,8 +1,9 @@
 love.graphics.setDefaultFilter('nearest', 'nearest')
 
+player = require("player")
+
 battle_engine = require("assets.battle_engine")
 --overworld_engine = require("assets.overworld_engine")
-player = require("player")
 
 scene = {
     i = "battle", -- this is the current scene
@@ -24,13 +25,18 @@ function love.load()
     fonts["sans"] = love.graphics.newFont("assets/fonts/sans.ttf")
     fonts["ja_JF-Dot-Shinonome14"] = love.graphics.newFont("assets/fonts/ja/JF-Dot-Shinonome14.ttf")
     fonts["ja_TanukiMagic"] = love.graphics.newFont("assets/fonts/ja/TanukiMagic.ttf")
+    -- initialize player and engines that need the graphics context
+    if player and player.load then player.load() end
+    if battle_engine and battle_engine.load then battle_engine.load() end
 end
 
 function love.update(dt)
     if scene.i == "battle" then
         battle_engine.update(dt)
     elseif scene.i == "overworld" then
-        overworld_engine.update(dt)
+        if overworld_engine and overworld_engine.update then
+            overworld_engine.update(dt)
+        end
     end
 end
 
@@ -40,6 +46,8 @@ function love.draw()
     if scene.i == "battle" then
         battle_engine.draw()
     elseif scene.i == "overworld" then
-        overworld_engine.draw()
+        if overworld_engine and overworld_engine.draw then
+            overworld_engine.draw()
+        end
     end
 end

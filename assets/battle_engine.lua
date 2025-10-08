@@ -1,4 +1,4 @@
--- engine.lua
+-- battle_engine.lua
 local battle_engine = {}
 
 -- these are default box positionings
@@ -11,23 +11,22 @@ local bullet_box = {
 }
 
 local action_ui = {
-    fight = {
-        img = love.graphics.newImage("assets/battle_assets/ui/0.png"),
-    },
-    act = {
-        img = love.graphics.newImage("assets/battle_assets/ui/1.png"),
-    },
-    item = {
-        img = love.graphics.newImage("assets/battle_assets/ui/2.png"),
-    },
-    mercy = {
-        img = love.graphics.newImage("assets/battle_assets/ui/3.png"),
-    }
+    fight = {},
+    act = {},
+    item = {},
+    mercy = {},
 }
 
-for _, v in pairs(action_ui) do
-    v.quad1 = love.graphics.newQuad(0, 0, 110, 42, v.img:getDimensions())
-    v.quad2 = love.graphics.newQuad(110, 0, 110, 42, v.img:getDimensions())
+-- create graphics objects in load, not at require-time
+function battle_engine.load()
+    for name, _ in pairs(action_ui) do
+        local path = "assets/battle_assets/ui/"
+        local idx = ({fight = "0.png", act = "1.png", item = "2.png", mercy = "3.png"})[name]
+        action_ui[name].img = love.graphics.newImage(path .. idx)
+        local w, h = action_ui[name].img:getDimensions()
+        action_ui[name].quad1 = love.graphics.newQuad(0, 0, 110, 42, w, h)
+        action_ui[name].quad2 = love.graphics.newQuad(110, 0, 110, 42, w, h)
+    end
 end
 
 function battle_engine.update(i)
@@ -58,9 +57,14 @@ local function draw_action_ui()
     local actions = { "fight", "act", "item", "mercy" }
     for i, name in ipairs(actions) do
         local btn = action_ui[name]
-        love.graphics.draw(btn.img, btn.quad1, ((i-1) * 157) + 29, 432)
+        local quad = btn.quad1
+        if player.i + 1 == i then
+            quad = btn.quad2
+        end
+        love.graphics.draw(btn.img, quad, ((i-1) * 157) + 29, 432)
     end
 end
+
 
 function battle_engine.draw()
     draw_action_ui()
