@@ -6,9 +6,12 @@ Melon/s_lfurica
 please don't delete this .txt file... this is important.
 
 I'm probably going to use some blue soul code by Sawby08, as I truly am not bothered to... make my own LOL
+Asuls for helping fix a problem with loading different enemies...
 
 For the template fight, There will be some spoilers for UNDERTALE: Efflorescit. 
 I'm making this engine so I can demo and show the coders what I mean!
+
+Any and all resources that aren't made by Temmie Chang or Toby Fox, or are fonts... are made by ME. MELON.
 
 In future, i may make a Japanese version of this engine for those who want it~! (probably no-one)
 

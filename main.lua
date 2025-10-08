@@ -5,9 +5,12 @@ player = require("player")
 battle_engine = require("assets.battle_engine")
 --overworld_engine = require("assets.overworld_engine")
 
+typewriter = require("assets.typewriter")
+writers = {}
+
 scene = {
     i = "battle", -- this is the current scene
-    ii = "0", -- this is the enemy currently loaded
+    ii = "undyne", -- this is the enemy currently loaded
     iii = "0", -- this is the map currently loaded
     iv = false -- this has no meaning yet.
 }
@@ -15,17 +18,17 @@ scene = {
 fonts = {}
 
 function love.load()
-    fonts["8bitoperator_jve"] = love.graphics.newFont("assets/fonts/8bitoperator_jve.ttf")
+    fonts["8bitoperator_jve"] = love.graphics.newFont("assets/fonts/8bitoperator_jve.ttf", 32)
     fonts["dotumche"] = love.graphics.newFont("assets/fonts/dotumche.ttf")
-    fonts["determination-mono"] = love.graphics.newFont("assets/fonts/determination-mono.ttf")
-    fonts["crypto'morrow"] = love.graphics.newFont("assets/fonts/crypto'morrow.ttf")
+    fonts["determination-mono"] = love.graphics.newFont("assets/fonts/determination-mono.ttf", 32)
+    fonts["crypto'morrow"] = love.graphics.newFont("assets/fonts/crypto'morrow.ttf", 15)
     fonts["papyrus"] = love.graphics.newFont("assets/fonts/papyrus.ttf")
     fonts["hachicro"] = love.graphics.newFont("assets/fonts/hachicro.ttf")
     fonts["hp"] = love.graphics.newFont("assets/fonts/hp.ttf")
     fonts["sans"] = love.graphics.newFont("assets/fonts/sans.ttf")
     fonts["ja_JF-Dot-Shinonome14"] = love.graphics.newFont("assets/fonts/ja/JF-Dot-Shinonome14.ttf")
     fonts["ja_TanukiMagic"] = love.graphics.newFont("assets/fonts/ja/TanukiMagic.ttf")
-    -- initialize player and engines that need the graphics context
+    
     if player and player.load then player.load() end
     if battle_engine and battle_engine.load then battle_engine.load() end
 end
@@ -41,7 +44,7 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.clear(0/255, 80/255, 80/255)
+    -- love.graphics.clear(0/255, 80/255, 80/255)
     -- love.graphics.draw(love.graphics.newImage("8.png"))
     if scene.i == "battle" then
         battle_engine.draw()
