@@ -59,7 +59,7 @@ function enemy.draw()
     love.graphics.draw(enemy.torso, 338 - enemy.torso:getWidth(), 105 + math.sin(enemy.animation_timer) * 3 - enemy.torso:getHeight(), 0 + math.cos(enemy.animation_timer) * 0.02, 2, 2)
     love.graphics.draw(enemy.ponytail, enemy.ponytail_quads[enemy.ponytail_frame], 342 + math.cos(enemy.animation_timer) * 2 - enemy.ponytail:getWidth(), 51 - enemy.ponytail:getHeight(), 0, 2, 2)
     love.graphics.draw(enemy.head, 320 + math.cos(enemy.animation_timer) * 2 - enemy.head:getWidth(), 61 + math.sin(enemy.animation_timer) * 3 - enemy.head:getHeight(), 0 + math.cos(enemy.animation_timer) * 0.02, 2, 2)
-    love.graphics.draw(enemy.arms, 342 + math.sin(enemy.animation_timer) * 3  - enemy.arms:getWidth(), 127 + math.sin(enemy.animation_timer) * 3 - enemy.arms:getHeight(), 0 + math.cos(enemy.animation_timer) * 0.02, 2, 2 + math.abs(math.cos(enemy.animation_timer) * 0.3))
+    love.graphics.draw(enemy.arms, 342 + math.sin(enemy.animation_timer) * 3  - enemy.arms:getWidth(), 127 + math.sin(enemy.animation_timer) * 3 - enemy.arms:getHeight(), 0 + math.cos(enemy.animation_timer) * 0.02, 2, 2)
     love.graphics.draw(enemy.hands_and_spear, 323 + math.sin(enemy.animation_timer) * 3  - enemy.hands_and_spear:getWidth(), 134 + math.sin(enemy.animation_timer) * 2 - enemy.hands_and_spear:getHeight(), 0 + math.cos(enemy.animation_timer) * 0.02, 2, 2)
 end
 
