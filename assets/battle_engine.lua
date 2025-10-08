@@ -1,7 +1,6 @@
 -- battle_engine.lua
 local battle_engine = {}
 local enemy = nil
-local key_state = require("assets.key_state")
 
 local function load_enemy() -- thanks to Asuls!
     local enemy_module = ("assets.battle_assets.enemies." .. scene.ii .. "." .. scene.ii)
@@ -30,6 +29,7 @@ function battle_engine.load()
     -- reset selections
     player.i = 0
     player.ii = 0
+    player.iii = 0 -- 0 = menu, 1 = fight, 2 = act, 3 = item, 4 = mercy, 5 = enemy turn
 
     for name, _ in pairs(action_ui) do
         local path = "assets/battle_assets/ui/"
@@ -56,15 +56,23 @@ function battle_engine.load()
     ))
 end
 
-function battle_engine.update(i) -- i = dt
-    key_state.update()
-
-    local skip = false
-    if key_state.x.just_pressed then
-        skip = true
-    else
-        skip = false
+local function move_around(i)
+    if player.iii == 0 then
+        if key_state.right.just_pressed then
+            player.i = (player.i + 1) % 4
+        end
+        if key_state.left.just_pressed then
+            player.i = (player.i - 1) % 4
+            if player.i < 0 then
+                player.i = player.i + 4
+            end
+        end
     end
+end
+
+
+function battle_engine.update(i) -- i = dt
+    local skip = key_state.x.just_pressed
 
     if writers then
         for _, w in ipairs(writers) do
@@ -77,6 +85,8 @@ function battle_engine.update(i) -- i = dt
     if enemy and enemy.update then
         enemy.update(i)
     end
+
+    move_around(i)
 end
 
 local function draw_hp()

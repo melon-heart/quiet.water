@@ -47,7 +47,7 @@ function love.update(dt)
 end
 
 function love.draw()
-    -- love.graphics.clear(0/255, 80/255, 80/255)
+    love.graphics.clear(30/255, 20/255, 40/255)
     -- love.graphics.draw(love.graphics.newImage("8.png"))
     if scene.i == "battle" then
         battle_engine.draw()
