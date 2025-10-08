@@ -1,5 +1,6 @@
 -- battle_engine.lua
 local battle_engine = {}
+local current_enemy = nil
 
 local function load_current_enemy() -- thanks to Asuls!
     local enemy_module = ("assets.battle_assets.enemies." .. scene.ii .. "." .. scene.ii)
@@ -36,16 +37,20 @@ function battle_engine.load()
 
     load_current_enemy()
 
+    current_enemy = load_current_enemy()
+    if current_enemy and current_enemy.load then
+        current_enemy.load()
+    end
+
     table.insert(writers, typewriter.new(
         50, 274,
-        "* hello /c[255,0,0]world/n/s[0.01]fast now/w slow down /s[0.1]again!",
+        "* For the /c[255,0,0]world/n/s[0.04]  or something.",
         fonts["determination-mono"],
         nil 
     ))
 end
 
-function battle_engine.update(i)
-    -- dt: delta time
+function battle_engine.update(i) -- i = dt
     local skip = false
     if love and love.keyboard and love.keyboard.isDown then
         skip = love.keyboard.isDown("x")
@@ -57,6 +62,11 @@ function battle_engine.update(i)
                 w:update(i, skip)
             end
         end
+    end
+
+    -- Update current enemy if it has an update function
+    if current_enemy and current_enemy.update then
+        current_enemy.update(i)
     end
 end
 
@@ -90,9 +100,8 @@ local function draw_action_ui()
     local actions = { "fight", "act", "item", "mercy" }
     for i, name in ipairs(actions) do
         local btn = action_ui[name]
-        -- guard against missing assets (load may not have been called or file missing)
+
         if not btn or not btn.img or not btn.quad1 then
-            -- skip drawing this button if assets are missing
         else
             local quad = btn.quad1
             if player and player.i and (player.i + 1 == i) and btn.quad2 then
@@ -104,9 +113,10 @@ local function draw_action_ui()
 end
 
 
-function battle_engine.draw()
+function battle_engine.draw(i) -- i = dt
     draw_action_ui()
     draw_hp()
+    current_enemy.draw(i)
     draw_bullet_box()
     -- Draw writers (typewriter text)
     if writers then
