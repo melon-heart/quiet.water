@@ -26,7 +26,6 @@ local function load_images() -- load the sprites here!
     end
 end
 
-
 local function load_custom_variables() -- this is for what you'll animate or something...
     enemy.ponytail_frame = 1
     enemy.ponytail_timer = 0
@@ -38,6 +37,15 @@ function enemy.load()
     reference = love.graphics.newImage("assets/battle_assets/enemies/undyne/images/reference.png") -- this is your reference when you uhh start animating enemy
     load_custom_variables()
     load_images()
+
+    enemy.turn = 1 -- current turn, only use 0 if you want the enemy to have the first turn.
+    enemy.flavour_texts = {
+    "* For the /c[255,0,0]world/n/s[0.1]  or something.",
+    "* Undyne is here!\n* She looks very determined.",
+    "* Undyne is here!\n* She looks even more determined.",
+    "* Undyne is here!\n* She looks extremely determined.",
+    "* Undyne is here!\n* She looks super ultra mega determined.",
+    }
 end
 
 function enemy.update(i) --i = dt

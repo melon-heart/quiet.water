@@ -1,8 +1,8 @@
 -- battle_engine.lua
 local battle_engine = {}
-local current_enemy = nil
+local enemy = nil
 
-local function load_current_enemy() -- thanks to Asuls!
+local function load_enemy() -- thanks to Asuls!
     local enemy_module = ("assets.battle_assets.enemies." .. scene.ii .. "." .. scene.ii)
     package.loaded[enemy_module] = nil
     return require(enemy_module)
@@ -35,16 +35,16 @@ function battle_engine.load()
         -- continue loading UI assets
     end
 
-    load_current_enemy()
+    load_enemy()
 
-    current_enemy = load_current_enemy()
-    if current_enemy and current_enemy.load then
-        current_enemy.load()
+    enemy = load_enemy()
+    if enemy and enemy.load then
+        enemy.load()
     end
 
     table.insert(writers, typewriter.new(
         50, 274,
-        "* For the /c[255,0,0]world/n/s[0.04]  or something.",
+        enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
         fonts["determination-mono"],
         nil 
     ))
@@ -64,9 +64,8 @@ function battle_engine.update(i) -- i = dt
         end
     end
 
-    -- Update current enemy if it has an update function
-    if current_enemy and current_enemy.update then
-        current_enemy.update(i)
+    if enemy and enemy.update then
+        enemy.update(i)
     end
 end
 
@@ -116,7 +115,7 @@ end
 function battle_engine.draw(i) -- i = dt
     draw_action_ui()
     draw_hp()
-    current_enemy.draw(i)
+    enemy.draw(i)
     draw_bullet_box()
     -- Draw writers (typewriter text)
     if writers then
