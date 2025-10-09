@@ -31,7 +31,7 @@ local function load_custom_variables() -- this is for what you'll animate or som
     enemy.ponytail_timer = 0
     enemy.ponytail_interval = 0.2
     enemy.animation_timer = 0
-    enemy.music = love.audio.newSource("assets/battle_assets/music/demo_song.mp3", "stream")
+    enemy.music = love.audio.newSource("assets/battle_assets/music/demo_song_.mp3", "stream")
     enemy.music:setLooping(true)
 end
 
