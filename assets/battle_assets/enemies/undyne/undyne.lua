@@ -41,10 +41,10 @@ function enemy.load()
     enemy.turn = 1 -- current turn, only use 0 if you want the enemy to have the first turn.
     enemy.flavour_texts = {
     "* For the /c[255,0,0]world/c[255,255,255]/w./w./w./n/w  or something.",
-    "* Undyne is here!\n* She looks very determined.",
-    "* Undyne is here!\n* She looks even more determined.",
-    "* Undyne is here!\n* She looks extremely determined.",
-    "* Undyne is here!\n* She looks super ultra mega determined.",
+    "* Undyne is here!/n* She looks very determined.",
+    "* Undyne is here!/n* She looks even more determined.",
+    "* Undyne is here!/n* She looks extremely determined.",
+    "* Undyne is here!/n* She looks super ultra mega determined.",
     }
 end
 
