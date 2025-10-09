@@ -31,6 +31,8 @@ local function load_custom_variables() -- this is for what you'll animate or som
     enemy.ponytail_timer = 0
     enemy.ponytail_interval = 0.2
     enemy.animation_timer = 0
+    enemy.music = love.audio.newSource("assets/battle_assets/music/demo_song.mp3", "stream")
+    enemy.music:setLooping(true)
 end
 
 function enemy.load()
@@ -49,6 +51,10 @@ function enemy.load()
 end
 
 function enemy.update(i) --i = dt
+    if not enemy.music:isPlaying() then
+            enemy.music:play()
+    end
+
     enemy.animation_timer = enemy.animation_timer + i
     enemy.ponytail_timer = enemy.ponytail_timer + i
     if enemy.ponytail_timer >= enemy.ponytail_interval then
