@@ -3,14 +3,21 @@
 local enemy = {}
 local reference = nil
 
+enemy.one = {
+    name = "Undyne",
+    health = 1500,
+    at = 10,
+    df = 10,
+}
+
 local function load_images() -- load the sprites here!
-    enemy.head = love.graphics.newImage("assets/battle_assets/enemies/undyne/images/head.png")
-    enemy.torso = love.graphics.newImage("assets/battle_assets/enemies/undyne/images/torso.png")
-    enemy.arms = love.graphics.newImage("assets/battle_assets/enemies/undyne/images/arms.png")
-    enemy.hands_and_spear = love.graphics.newImage("assets/battle_assets/enemies/undyne/images/hands_and_spear.png")      
-    enemy.legs = love.graphics.newImage("assets/battle_assets/enemies/undyne/images/legs.png")
-    enemy.skirt = love.graphics.newImage("assets/battle_assets/enemies/undyne/images/skirt.png")
-    enemy.ponytail = love.graphics.newImage("assets/battle_assets/enemies/undyne/images/pony_tail_quads.png")
+    enemy.head = love.graphics.newImage("assets/battle_assets/enemies/template/images/head.png")
+    enemy.torso = love.graphics.newImage("assets/battle_assets/enemies/template/images/torso.png")
+    enemy.arms = love.graphics.newImage("assets/battle_assets/enemies/template/images/arms.png")
+    enemy.hands_and_spear = love.graphics.newImage("assets/battle_assets/enemies/template/images/hands_and_spear.png")      
+    enemy.legs = love.graphics.newImage("assets/battle_assets/enemies/template/images/legs.png")
+    enemy.skirt = love.graphics.newImage("assets/battle_assets/enemies/template/images/skirt.png")
+    enemy.ponytail = love.graphics.newImage("assets/battle_assets/enemies/template/images/pony_tail_quads.png")
 
     enemy.ponytail_quads = {}
     local quad_w, quad_h = 39, 26
@@ -36,7 +43,7 @@ local function load_custom_variables() -- this is for what you'll animate or som
 end
 
 function enemy.load()
-    reference = love.graphics.newImage("assets/battle_assets/enemies/undyne/images/reference.png") -- this is your reference when you uhh start animating enemy
+    reference = love.graphics.newImage("assets/battle_assets/enemies/template/images/reference.png") -- this is your reference when you uhh start animating enemy
     load_custom_variables()
     load_images()
 

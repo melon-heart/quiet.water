@@ -93,6 +93,15 @@ local function draw_hp()
     love.graphics.setColor(1, 1, 1)
     love.graphics.setFont(fonts["crypto'morrow"])
     love.graphics.print(player.name .. "  lv " .. player.lv, 30, 403)
+
+    love.graphics.setFont(fonts["hp"])
+    love.graphics.print("hp", 244, 406)
+
+    love.graphics.setColor(191, 0, 0)
+    love.graphics.rectangle("fill", 275, 400, player.mhp * 1.2, 21)
+    love.graphics.setColor(255, 245, 0)
+    love.graphics.rectangle("fill", 275, 400, player.hp * 1.2, 21)
+
 end
 
 local function draw_bullet_box()

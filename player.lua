@@ -2,8 +2,8 @@ player = {}
 items = {}
 
 function player.load()
-    player.name = "melon"
-    player.lv = 1
+    player.name = "sulfa"
+    player.lv = 19
     player.mhp = 16 + (player.lv * 4)
     player.hp = player.mhp
     player.exp = 0

@@ -11,7 +11,7 @@ writers = {}
 
 scene = {
     i = "battle", -- this is the current scene
-    ii = "undyne", -- this is the enemy currently loaded
+    ii = "template", -- this is the enemy currently loaded
     iii = "0", -- this is the map currently loaded
     iv = false -- this has no meaning yet.
 }
@@ -25,7 +25,7 @@ function love.load()
     fonts["crypto'morrow"] = love.graphics.newFont("assets/fonts/crypto'morrow.ttf", 15)
     fonts["papyrus"] = love.graphics.newFont("assets/fonts/papyrus.ttf")
     fonts["hachicro"] = love.graphics.newFont("assets/fonts/hachicro.ttf")
-    fonts["hp"] = love.graphics.newFont("assets/fonts/hp.ttf")
+    fonts["hp"] = love.graphics.newFont("assets/fonts/hp.ttf", 10)
     fonts["sans"] = love.graphics.newFont("assets/fonts/sans.ttf")
     fonts["ja_JF-Dot-Shinonome14"] = love.graphics.newFont("assets/fonts/ja/JF-Dot-Shinonome14.ttf")
     fonts["ja_TanukiMagic"] = love.graphics.newFont("assets/fonts/ja/TanukiMagic.ttf")
@@ -47,7 +47,7 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.clear(30/255, 20/255, 40/255)
+    -- love.graphics.clear(30/255, 20/255, 40/255)
     -- love.graphics.draw(love.graphics.newImage("8.png"))
     if scene.i == "battle" then
         battle_engine.draw()
