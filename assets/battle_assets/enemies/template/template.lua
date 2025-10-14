@@ -60,9 +60,7 @@ end
 
 function enemy.spawn_player_attack(i, ii) -- this handles the player attack, and its consequences.
     -- pretend there's stuff here
-    if player.weapon == "glove" then
-        -- animate later
-    end
+    attacks.spawned = true
     hurt_enemy(i, ii)
 end
 

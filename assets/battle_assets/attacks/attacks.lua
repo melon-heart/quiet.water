@@ -24,8 +24,6 @@ end
 
 function attacks.load()
 
-    load_enemy()
-
     enemy = load_enemy()
     if enemy and enemy.load then
         enemy.load()
@@ -72,7 +70,7 @@ function attacks.update(i) -- i = dt
     elseif tough_glove.phase == "flash" then
         tough_glove.timer = tough_glove.timer + i * 8
         if tough_glove.timer >= 3 then
-            tough_glove.phase = "done"
+            tough_glove.phase = "press_z"
             tough_glove.timer = 0
             tough_glove.amount_pressed = 0
             attacks.spawned = false

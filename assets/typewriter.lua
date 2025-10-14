@@ -195,6 +195,11 @@ function typewriter:clear()
     self.current_text = ""
     self.parsed_segments = {}
     self.char_count = 0
+    self.index = 1
+    self.timer = 0
+    self.wait_time = 0
+    self.finished = true
+    self.current_color = {1, 1, 1, 1}
 end
 
 function typewriter:is_finished()

@@ -45,15 +45,13 @@ function battle_engine.load()
 
     attacks.load()
 
-    load_enemy()
-
     enemy = load_enemy()
     if enemy and enemy.load then
         enemy.load()
     end
 
     table.insert(writers, typewriter.new(
-        50, 274,
+        55, 268,
         enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
         fonts["determination-mono"],
         sounds["speak1"] 
@@ -74,12 +72,22 @@ local function move_around(i)
         soul.y = 432 + 13
         if key_state.z.just_pressed then
             sounds["select"]:play()
-            typewriter:clear()
+            writers[#writers]:clear(writers)
             player.iii = "button" .. player.i 
         end
     elseif player.iii == "button0" then
-        soul.x = 50
-        soul.y = 274 + (player.ii * 157)
+        soul.x = 62
+        soul.y = 274 + (player.ii * 38)
+
+        if key_state.x.just_pressed then
+            player.iii = 0
+                table.insert(writers, typewriter.new(
+                55, 268,
+                enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
+                fonts["determination-mono"],
+                sounds["speak1"] 
+                ))
+        end
     end
 end
 
@@ -151,6 +159,7 @@ local function draw_bullet_box()
 end
 
 local function draw_action_ui()
+    love.graphics.setColor(1, 1, 1)
     local actions = { "fight", "act", "item", "mercy" }
     for i, name in ipairs(actions) do
         local btn = action_ui[name]
@@ -166,13 +175,32 @@ local function draw_action_ui()
     end
 end
 
-
-function battle_engine.draw(i) -- i = dt
-    draw_action_ui()
-    draw_hp()
-    enemy.draw(i)
-    draw_bullet_box()
-    draw_soul()
+local function draw_text()
+    love.graphics.setColor(1, 1, 1)
+    if player.iii == "button0" then
+        love.graphics.setFont(fonts["determination-mono"])
+        if enemy.one.alive then
+            love.graphics.print("* " .. enemy.one.name, 100, 268)
+        else
+                love.graphics.setColor(1, 1, 1, 0.5)
+            love.graphics.print("* Deceased", 100, 268)
+                love.graphics.setColor(1, 1, 1)
+        end
+        if enemy.two.alive then
+            love.graphics.print("* " .. enemy.two.name, 100, 306)
+        else
+                love.graphics.setColor(1, 1, 1, 0.5)
+            love.graphics.print("* Deceased", 100, 306)
+                love.graphics.setColor(1, 1, 1)
+        end
+        if enemy.three.alive then
+            love.graphics.print("* " .. enemy.three.name, 100, 344)
+        else
+                love.graphics.setColor(1, 1, 1, 0.5)
+            love.graphics.print("* Deceased", 100, 344)
+                love.graphics.setColor(1, 1, 1)
+        end
+    end
 
     if writers then
         for _, w in ipairs(writers) do
@@ -181,8 +209,18 @@ function battle_engine.draw(i) -- i = dt
             end
         end
     end
+end
+
+
+function battle_engine.draw(i) -- i = dt
+    draw_action_ui()
+    draw_hp()
+    enemy.draw(i)
+    draw_bullet_box()
+    draw_text()
 
     attacks.draw(i)
+    draw_soul()
 end
 
 return battle_engine

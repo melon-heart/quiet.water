@@ -44,7 +44,7 @@ function love.load()
     soul.x = 0
     soul.y = 0
     soul.rotation = 0
-    
+
     if player and player.load then player.load() end
     if battle_engine and battle_engine.load then battle_engine.load() end
 end
@@ -61,8 +61,24 @@ function love.update(dt)
     end
 end
 
+local function gradient()
+
+    local topColor = {120/255, 200/255, 120/255}
+    local bottomColor = {20/255, 80/255, 20/255}
+    local w, h = love.graphics.getDimensions()
+
+    local gradient = love.graphics.newMesh({
+        {0, 0, 0, 0, topColor[1], topColor[2], topColor[3], 1},
+        {w, 0, 1, 0, topColor[1], topColor[2], topColor[3], 1},
+        {w, h, 1, 1, bottomColor[1], bottomColor[2], bottomColor[3], 1},
+        {0, h, 0, 1, bottomColor[1], bottomColor[2], bottomColor[3], 1},
+    }, "fan")
+
+    love.graphics.draw(gradient)
+end
+
 function love.draw()
-    -- love.graphics.clear(30/255, 20/255, 40/255)
+    gradient()
     -- love.graphics.draw(love.graphics.newImage("8.png"))
     if scene.i == "battle" then
         battle_engine.draw()
