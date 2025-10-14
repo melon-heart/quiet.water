@@ -8,6 +8,8 @@ local function load_enemy() -- thanks to Asuls!
     return require(enemy_module)
 end
 
+local attacks = require "assets.battle_assets.attacks.attacks" -- the animations for the attacks... might be used for both player and enemy attacks.
+
 -- these are default box positionings
 local bullet_box = {
     x = 320,    -- X
@@ -40,6 +42,8 @@ function battle_engine.load()
         action_ui[name].quad2 = love.graphics.newQuad(110, 0, 110, 42, w, h)
         -- continue loading UI assets
     end
+
+    attacks.load()
 
     load_enemy()
 
@@ -80,6 +84,8 @@ function battle_engine.update(i) -- i = dt
         end
     end
 
+    attacks.update(i)
+
     if enemy and enemy.update then
         enemy.update(i)
     end
@@ -94,7 +100,7 @@ local function draw_hp()
 
     love.graphics.setFont(fonts["hp"])
     love.graphics.print("hp", 244, 406)
-    
+
     if enemy.kr then
         love.graphics.print("kr", 244, 406)
     end
@@ -148,7 +154,7 @@ function battle_engine.draw(i) -- i = dt
     draw_hp()
     enemy.draw(i)
     draw_bullet_box()
-    -- Draw writers (typewriter text)
+
     if writers then
         for _, w in ipairs(writers) do
             if w and w.draw then
@@ -156,6 +162,8 @@ function battle_engine.draw(i) -- i = dt
             end
         end
     end
+
+    attacks.draw(i)
 end
 
 return battle_engine

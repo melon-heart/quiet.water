@@ -4,7 +4,7 @@ player = require("player")
 key_state = require("assets.key_state")
 
 battle_engine = require("assets.battle_engine")
---overworld_engine = require("assets.overworld_engine")
+overworld_engine = require("assets.overworld_engine")
 
 typewriter = require("assets.typewriter")
 writers = {}
