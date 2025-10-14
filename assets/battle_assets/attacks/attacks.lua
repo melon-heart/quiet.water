@@ -45,6 +45,11 @@ function attacks.load()
 end
 
 function attacks.update(i) -- i = dt
+
+    if love.keyboard.isDown(1) then -- just for testing
+        attacks.spawned = true
+    end
+
     if player.ii == 0 then 
         attacks.x = enemy.one.x
         attacks.y = enemy.one.y
