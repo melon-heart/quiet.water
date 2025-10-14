@@ -3,7 +3,7 @@ items = {}
 
 function player.load()
     player.name = "melon"
-    player.lv = 19
+    player.lv = 8
     player.mhp = 16 + (player.lv * 4)
     player.hp = player.mhp
     player.exp = 0
@@ -13,7 +13,7 @@ function player.load()
 
     player.i = 0 -- selection
     player.ii = 0 -- selection part 2!
-    player.iii = 0 -- rest are placeholder i'll need later
+    player.iii = 0 -- selection part 3... rest are placeholder i'll need later
     player.iv = 0 -- atk amount probably?
     player.v = 0
 end

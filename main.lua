@@ -9,7 +9,7 @@ overworld_engine = require("assets.overworld_engine")
 typewriter = require("assets.typewriter")
 writers = {}
 
-soul = love.graphics.newImage("assets/images/soul.png")
+soul = {}
 
 scene = {
     i = "battle", -- this is the current scene
@@ -39,6 +39,11 @@ function love.load()
     sounds["select"] = love.audio.newSource("assets/sounds/snd_select.ogg", "static")
     sounds["punchstrong"] = love.audio.newSource("assets/sounds/snd_punchstrong.wav", "static") 
     sounds["punchweak"] = love.audio.newSource("assets/sounds/snd_punchweak.wav", "static")
+    
+    soul.image = love.graphics.newImage("assets/images/soul.png")
+    soul.x = 0
+    soul.y = 0
+    soul.rotation = 0
     
     if player and player.load then player.load() end
     if battle_engine and battle_engine.load then battle_engine.load() end

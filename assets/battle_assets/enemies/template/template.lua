@@ -79,9 +79,9 @@ local function load_custom_variables() -- load everything you need here
     enemy.three.x = 540
     enemy.three.y = 150
 
-    enemy.kr = math.random(0, 1) == 1
+    enemy.kr = 0 -- 1 or 0 (1 meaning yeah, 0 meaning nah)
 
-    -- okay don't change anything under here.
+    -- okay. don't change anything under here.
     
 end
 

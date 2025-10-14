@@ -70,6 +70,15 @@ local function move_around(i)
             player.i = (player.i - 1) % 4
             sounds["squeak"]:play()
         end
+        soul.x = (player.i * 157) + 29 + 8
+        soul.y = 432 + 13
+        if key_state.z.just_pressed then
+            player.iii = "button" .. player.i 
+            typewriter:clear()
+        end
+    elseif player.iii == "button0" then
+        soul.x = 50
+        soul.y = 274 + (player.ii * 157)
     end
 end
 
@@ -101,15 +110,23 @@ local function draw_hp()
     love.graphics.setFont(fonts["hp"])
     love.graphics.print("hp", 244, 406)
 
-    if enemy.kr then
-        love.graphics.print("kr", 244, 406)
+    if enemy.kr == 1 then
+        love.graphics.print("kr", 282 + player.mhp * 1.2, 406)
     end
+
+    love.graphics.setFont(fonts["crypto'morrow"])
+    love.graphics.print(player.hp .. " / " .. player.mhp, 342 + (player.mhp * 1.2) * enemy.kr, 403)
 
     love.graphics.setColor(191, 0, 0)
     love.graphics.rectangle("fill", 275, 400, player.mhp * 1.2, 21)
     love.graphics.setColor(255, 245, 0)
     love.graphics.rectangle("fill", 275, 400, player.hp * 1.2, 21)
 
+end
+
+local function draw_soul()
+    love.graphics.setColor(255/255, 0/255 ,100/255, 1)
+    love.graphics.draw(soul.image, soul.x, soul.y, soul.rotation, 2, 2)
 end
 
 local function draw_bullet_box()
@@ -154,6 +171,7 @@ function battle_engine.draw(i) -- i = dt
     draw_hp()
     enemy.draw(i)
     draw_bullet_box()
+    draw_soul()
 
     if writers then
         for _, w in ipairs(writers) do
