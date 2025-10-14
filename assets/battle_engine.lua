@@ -73,8 +73,9 @@ local function move_around(i)
         soul.x = (player.i * 157) + 29 + 8
         soul.y = 432 + 13
         if key_state.z.just_pressed then
-            player.iii = "button" .. player.i 
+            sounds["select"]:play()
             typewriter:clear()
+            player.iii = "button" .. player.i 
         end
     elseif player.iii == "button0" then
         soul.x = 50
