@@ -94,6 +94,10 @@ local function draw_hp()
 
     love.graphics.setFont(fonts["hp"])
     love.graphics.print("hp", 244, 406)
+    
+    if enemy.kr then
+        love.graphics.print("kr", 244, 406)
+    end
 
     love.graphics.setColor(191, 0, 0)
     love.graphics.rectangle("fill", 275, 400, player.mhp * 1.2, 21)

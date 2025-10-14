@@ -2,17 +2,19 @@ player = {}
 items = {}
 
 function player.load()
-    player.name = "sulfa"
+    player.name = "melon"
     player.lv = 19
     player.mhp = 16 + (player.lv * 4)
     player.hp = player.mhp
     player.exp = 0
     player.g = 0
+    player.weapon = "glove"
+    player.armour = "tutu" -- unfortunately, armour does nothing... because i'm too lazy to make it do anything. do it yourself.
 
     player.i = 0 -- selection
     player.ii = 0 -- selection part 2!
     player.iii = 0 -- rest are placeholder i'll need later
-    player.iv = 0
+    player.iv = 0 -- atk amount probably?
     player.v = 0
 end
 

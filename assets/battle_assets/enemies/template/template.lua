@@ -1,7 +1,7 @@
--- undyne.lua (will be the base for any enemy... heh) still very much a WIP
+-- template.lua your enemy template! good luck figuring it out...
 
 local enemy = {}
-local reference = nil
+local player_atk_var = {}
 
 enemy.one = {
     name = "Dummy_0",
@@ -12,7 +12,8 @@ enemy.one = {
     y = nil,
     alive = true,
     dodge = true,
-    d_v = 0, -- dodge variable... don't worry about it
+    current_anim = "static",
+    default_anim = "static,"
 }
 
 enemy.two = {
@@ -24,7 +25,8 @@ enemy.two = {
     y = nil,
     alive = true,
     dodge = false, 
-    d_v = 0, -- dodge variable... don't worry about it
+    current_anim = "static",
+    default_anim = "static,"
 }
 
 
@@ -37,7 +39,8 @@ enemy.three = {
     y = nil,
     alive = true,
     dodge = false,
-    d_v = 0, -- dodge variable... don't worry about it
+    current_anim = "static",
+    default_anim = "static,"
 }
 
 local function load_images() -- load the sprites here!
@@ -46,8 +49,21 @@ local function load_images() -- load the sprites here!
             enemy.dummy2 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy2.png")
 end
 
-local function spawn_player_attack(i) -- i = enemy selected.
-    -- pretend there's stuff here.
+local function hurt_enemy(i, ii) -- i = target
+    if i.dodge then
+        i.current_anim = "dodge"
+    else
+        i.current_anim = "hurt"
+        i.hp = i.hp - ii
+    end
+end
+
+function enemy.spawn_player_attack(i, ii) -- this handles the player attack, and its consequences.
+    -- pretend there's stuff here
+    if player.weapon == "glove" then
+        -- animate later
+    end
+    hurt_enemy(i, ii)
 end
 
 local function load_custom_variables() -- load everything you need here
@@ -63,7 +79,10 @@ local function load_custom_variables() -- load everything you need here
     enemy.three.x = 540
     enemy.three.y = 150
 
-    enemy.kr = math.random(1, 0) and true or false
+    enemy.kr = math.random(0, 1) == 1
+
+    -- okay don't change anything under here.
+    
 end
 
 function enemy.load()
@@ -72,7 +91,7 @@ function enemy.load()
 
     enemy.turn = 1 -- current turn, only use 0 if you want the enemy to have the first turn.
     enemy.flavour_texts = {
-    "* Template enemies.",
+    "* Template dummies.",
     "* They like... hate you?",
     "* Woah.",
     "* Here for your liver."
