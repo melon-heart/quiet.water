@@ -63,21 +63,24 @@ end
 
 local function gradient()
 
-    local topColor = {120/255, 200/255, 120/255}
-    local bottomColor = {20/255, 80/255, 20/255}
-    local w, h = love.graphics.getDimensions()
+    local top_color = {70/255, 200/255, 220/255}    
+    local bottom_color = {0/255, 50/255, 100/255}
 
-    local gradient = love.graphics.newMesh({
-        {0, 0, 0, 0, topColor[1], topColor[2], topColor[3], 1},
-        {w, 0, 1, 0, topColor[1], topColor[2], topColor[3], 1},
-        {w, h, 1, 1, bottomColor[1], bottomColor[2], bottomColor[3], 1},
-        {0, h, 0, 1, bottomColor[1], bottomColor[2], bottomColor[3], 1},
+
+    local width, height = love.graphics.getDimensions()
+
+    local gradient_mesh = love.graphics.newMesh({
+        {0, 0,        0, 0, top_color[1], top_color[2], top_color[3], 1},
+        {width, 0,     1, 0, top_color[1], top_color[2], top_color[3], 1},
+        {width, height,1, 1, bottom_color[1], bottom_color[2], bottom_color[3], 1},
+        {0, height,    0, 1, bottom_color[1], bottom_color[2], bottom_color[3], 1},
     }, "fan")
 
-    love.graphics.draw(gradient)
+    love.graphics.draw(gradient_mesh)
 end
 
 function love.draw()
+    love.graphics.setColor(1, 1, 1, 1)
     gradient()
     -- love.graphics.draw(love.graphics.newImage("8.png"))
     if scene.i == "battle" then
