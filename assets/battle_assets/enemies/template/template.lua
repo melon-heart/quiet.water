@@ -6,11 +6,13 @@ local reference = nil
 enemy.one = {
     name = "Dummy_0",
     hp = 1,
-    at = 10,
-    df = 10,
+    at = 1,
+    df = 1,
     x = nil,
     y = nil,
     alive = true,
+    dodge = true,
+    d_v = 0, -- dodge variable... don't worry about it
 }
 
 enemy.two = {
@@ -21,6 +23,8 @@ enemy.two = {
     x = nil,
     y = nil,
     alive = true,
+    dodge = false, 
+    d_v = 0, -- dodge variable... don't worry about it
 }
 
 
@@ -32,6 +36,8 @@ enemy.three = {
     x = nil,
     y = nil,
     alive = true,
+    dodge = false,
+    d_v = 0, -- dodge variable... don't worry about it
 }
 
 local function load_images() -- load the sprites here!
@@ -40,7 +46,11 @@ local function load_images() -- load the sprites here!
             enemy.dummy2 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy2.png")
 end
 
-local function load_custom_variables() -- this is for what you'll animate or something...
+local function spawn_player_attack(i) -- i = enemy selected.
+    -- pretend there's stuff here.
+end
+
+local function load_custom_variables() -- load everything you need here
     -- enemy.music = love.audio.newSource("assets/battle_assets/music/dummy_song.ogg", "stream")
     --enemy.music:setLooping(true)
 
@@ -52,6 +62,8 @@ local function load_custom_variables() -- this is for what you'll animate or som
 
     enemy.three.x = 540
     enemy.three.y = 150
+
+    enemy.kr = math.random(1, 0) and true or false
 end
 
 function enemy.load()
@@ -62,7 +74,8 @@ function enemy.load()
     enemy.flavour_texts = {
     "* Template enemies.",
     "* They like... hate you?",
-    "* Woah."
+    "* Woah.",
+    "* Here for your liver."
     }
 end
 

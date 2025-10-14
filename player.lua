@@ -18,6 +18,12 @@ end
 
 function player.update(i, ii, iii, iv, v) -- i = hp amount changed, ii = exp gained, iii = g gained, iv = item gained, v = item eaten
 -- pretend the code is done
+    if i ~= 0 then
+        player.hp = player.hp + i 
+        if player.hp >= player.mhp then 
+            player.hp = player.mhp
+        end
+    end
 end 
 
 return player

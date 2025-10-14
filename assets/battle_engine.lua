@@ -52,7 +52,7 @@ function battle_engine.load()
         50, 274,
         enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
         fonts["determination-mono"],
-        nil 
+        sounds["speak1"] 
     ))
 end
 
@@ -60,16 +60,14 @@ local function move_around(i)
     if player.iii == 0 then
         if key_state.right.just_pressed then
             player.i = (player.i + 1) % 4
+            sounds["squeak"]:play()
         end
         if key_state.left.just_pressed then
             player.i = (player.i - 1) % 4
-            if player.i < 0 then
-                player.i = player.i + 4
-            end
+            sounds["squeak"]:play()
         end
     end
 end
-
 
 function battle_engine.update(i) -- i = dt
     local skip = key_state.x.just_pressed

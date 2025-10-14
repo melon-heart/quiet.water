@@ -17,6 +17,7 @@ scene = {
 }
 
 fonts = {}
+sounds = {}
 
 function love.load()
     fonts["8bitoperator_jve"] = love.graphics.newFont("assets/fonts/8bitoperator_jve.ttf", 32)
@@ -29,6 +30,11 @@ function love.load()
     fonts["sans"] = love.graphics.newFont("assets/fonts/sans.ttf")
     fonts["ja_JF-Dot-Shinonome14"] = love.graphics.newFont("assets/fonts/ja/JF-Dot-Shinonome14.ttf")
     fonts["ja_TanukiMagic"] = love.graphics.newFont("assets/fonts/ja/TanukiMagic.ttf")
+
+    sounds["speak0"] = love.audio.newSource("assets/sounds/v_generic1.ogg", "stream") 
+    sounds["speak1"] = love.audio.newSource("assets/sounds/v_generic2.ogg", "stream") 
+    sounds["squeak"] = love.audio.newSource("assets/sounds/snd_squeak.ogg", "stream") 
+    sounds["select"] = love.audio.newSource("assets/sounds/snd_select.ogg", "stream")
     
     if player and player.load then player.load() end
     if battle_engine and battle_engine.load then battle_engine.load() end
