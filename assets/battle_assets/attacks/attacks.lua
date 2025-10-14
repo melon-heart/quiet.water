@@ -79,6 +79,7 @@ function attacks.update(i) -- i = dt
             tough_glove.timer = 0
             tough_glove.amount_pressed = 0
             attacks.spawned = false
+            tough_glove.offset = {0, 0}
         end
     elseif tough_glove.phase == "press_z" then
         tough_glove.timer = tough_glove.timer + i
@@ -88,8 +89,16 @@ function attacks.update(i) -- i = dt
             sounds["punchweak"]:clone():play()
         end
         if tough_glove.timer >= 1 or tough_glove.amount_pressed >= 5 then
-            tough_glove.phase = "fist"
-            tough_glove.timer = 0
+            if tough_glove.timer >= 1 and tough_glove.amount_pressed <= 2 then
+                tough_glove.phase = "press_z"
+                tough_glove.timer = 0
+                tough_glove.amount_pressed = 0
+                attacks.spawned = false
+                tough_glove.offset = {0, 0}
+            else
+                tough_glove.phase = "fist"
+                tough_glove.timer = 0
+            end
         end
     end
     end
