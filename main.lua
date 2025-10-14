@@ -9,6 +9,8 @@ overworld_engine = require("assets.overworld_engine")
 typewriter = require("assets.typewriter")
 writers = {}
 
+soul = love.graphics.newImage("assets/images/soul.png")
+
 scene = {
     i = "battle", -- this is the current scene
     ii = "template", -- this is the enemy currently loaded
@@ -31,17 +33,19 @@ function love.load()
     fonts["ja_JF-Dot-Shinonome14"] = love.graphics.newFont("assets/fonts/ja/JF-Dot-Shinonome14.ttf")
     fonts["ja_TanukiMagic"] = love.graphics.newFont("assets/fonts/ja/TanukiMagic.ttf")
 
-    sounds["speak0"] = love.audio.newSource("assets/sounds/v_generic1.ogg", "stream") 
-    sounds["speak1"] = love.audio.newSource("assets/sounds/v_generic2.ogg", "stream") 
-    sounds["squeak"] = love.audio.newSource("assets/sounds/snd_squeak.ogg", "stream") 
-    sounds["select"] = love.audio.newSource("assets/sounds/snd_select.ogg", "stream")
+    sounds["speak0"] = love.audio.newSource("assets/sounds/v_generic1.ogg", "static") 
+    sounds["speak1"] = love.audio.newSource("assets/sounds/v_generic2.ogg", "static") 
+    sounds["squeak"] = love.audio.newSource("assets/sounds/snd_squeak.ogg", "static") 
+    sounds["select"] = love.audio.newSource("assets/sounds/snd_select.ogg", "static")
+    sounds["punchstrong"] = love.audio.newSource("assets/sounds/snd_punchstrong.wav", "static") 
+    sounds["punchweak"] = love.audio.newSource("assets/sounds/snd_punchweak.wav", "static")
     
     if player and player.load then player.load() end
     if battle_engine and battle_engine.load then battle_engine.load() end
 end
 
 function love.update(dt)
-    key_state.update()
+    key_state.update(dt)
 
     if scene.i == "battle" then
         battle_engine.update(dt)
@@ -63,3 +67,4 @@ function love.draw()
         end
     end
 end
+

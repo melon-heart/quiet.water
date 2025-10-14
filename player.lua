@@ -8,7 +8,7 @@ function player.load()
     player.hp = player.mhp
     player.exp = 0
     player.g = 0
-    player.weapon = "glove"
+    player.weapon = "tough_glove"
     player.armour = "tutu" -- unfortunately, armour does nothing... because i'm too lazy to make it do anything. do it yourself.
 
     player.i = 0 -- selection

@@ -1,4 +1,4 @@
--- player_actions.lua
+-- key_state.lua
 local key_state = {
     z = {is_down = false, was_down = false, just_pressed = false},
     x = {is_down = false, was_down = false, just_pressed = false},
