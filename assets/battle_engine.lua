@@ -77,7 +77,7 @@ local function move_around(i)
         end
     elseif player.iii == "button0" then
         soul.x = 62
-        soul.y = 274 + (player.ii * 38)
+        soul.y = 273 + (player.ii * 38)
 
         if key_state.down.just_pressed then
             player.ii = (player.ii + 1) % 3
@@ -100,7 +100,7 @@ local function move_around(i)
         end
     elseif player.iii == "button1" then
         soul.x = 62
-        soul.y = 274 + (player.ii * 38)
+        soul.y = 273 + (player.ii * 38)
 
         if key_state.down.just_pressed then
             player.ii = (player.ii + 1) % 3
@@ -161,7 +161,7 @@ local function draw_hp()
 
     love.graphics.setColor(255/255, 0/255 ,100/255, 1)
     love.graphics.rectangle("fill", 275, 400, player.mhp * 1.2, 21)
-    love.graphics.setColor(255/255, 245/255, 0)
+    love.graphics.setColor(255/255, 214/255, 0)
     love.graphics.rectangle("fill", 275, 400, player.hp * 1.2, 21)
 
 end

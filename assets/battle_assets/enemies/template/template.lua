@@ -5,7 +5,7 @@ local player_atk_var = {}
 
 enemy.one = {
     name = "Drama",
-    hp = 150,
+    hp = 200,
     mhp = 200,
     at = 1,
     df = 1,
