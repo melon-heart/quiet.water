@@ -68,7 +68,7 @@ local function move_around(i)
             player.i = (player.i - 1) % 4
             sounds["squeak"]:play()
         end
-        soul.x = (player.i * 157) + 29 + 8
+        soul.x = (player.i * 157) + 29 + 7
         soul.y = 432 + 13
         if key_state.z.just_pressed then
             sounds["select"]:play()
@@ -76,6 +76,29 @@ local function move_around(i)
             player.iii = "button" .. player.i 
         end
     elseif player.iii == "button0" then
+        soul.x = 62
+        soul.y = 274 + (player.ii * 38)
+
+        if key_state.down.just_pressed then
+            player.ii = (player.ii + 1) % 3
+            sounds["squeak"]:play()
+        end
+        if key_state.up.just_pressed then
+            player.ii = (player.ii - 1) % 3
+            sounds["squeak"]:play()
+        end
+
+        if key_state.x.just_pressed then
+            player.ii = 0
+            player.iii = 0
+                table.insert(writers, typewriter.new(
+                55, 268,
+                enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
+                fonts["determination-mono"],
+                sounds["speak1"] 
+                ))
+        end
+    elseif player.iii == "button1" then
         soul.x = 62
         soul.y = 274 + (player.ii * 38)
 
@@ -136,9 +159,9 @@ local function draw_hp()
     love.graphics.setFont(fonts["crypto'morrow"])
     love.graphics.print(player.hp .. " / " .. player.mhp, 342 + (player.mhp * 1.2) * enemy.kr, 403)
 
-    love.graphics.setColor(191, 0, 0)
+    love.graphics.setColor(255/255, 0/255 ,100/255, 1)
     love.graphics.rectangle("fill", 275, 400, player.mhp * 1.2, 21)
-    love.graphics.setColor(255, 245, 0)
+    love.graphics.setColor(255/255, 245/255, 0)
     love.graphics.rectangle("fill", 275, 400, player.hp * 1.2, 21)
 
 end
@@ -187,7 +210,7 @@ end
 
 local function draw_text()
     love.graphics.setColor(1, 1, 1)
-    if player.iii == "button0" then
+    if player.iii == "button0" or player.iii == "button1" then
         love.graphics.setFont(fonts["determination-mono"])
         if enemy.one.alive then
             love.graphics.print("* " .. enemy.one.name, 100, 268)
@@ -209,6 +232,45 @@ local function draw_text()
                 love.graphics.setColor(1, 1, 1, 0.5)
             love.graphics.print("* Deceased", 100, 344)
                 love.graphics.setColor(1, 1, 1)
+        end
+
+        if player.iii == "button0" then 
+            if enemy.amount >= 1 then 
+                love.graphics.setColor(255/255, 0/255, 100/255, 1)
+                love.graphics.rectangle("fill", 410, 272, 110, 19)
+
+                local bar_width = (enemy.one.hp / enemy.one.mhp)
+                love.graphics.setColor(60/255, 203/255, 128/255, 1)
+                love.graphics.rectangle("fill", 410, 272, bar_width * 110, 19)
+
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.setFont(fonts["crypto'morrow"])
+                love.graphics.print(bar_width * 100 .. "%", 526, 273)
+            end
+            if enemy.amount >= 2 then 
+                love.graphics.setColor(255/255, 0/255, 100/255, 1)
+                love.graphics.rectangle("fill", 410, 272 + 38, 110, 19)
+
+                local bar_width = (enemy.two.hp / enemy.two.mhp)
+                love.graphics.setColor(60/255, 203/255, 128/255, 1)
+                love.graphics.rectangle("fill", 410, 272 + 38, bar_width * 110, 19)
+
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.setFont(fonts["crypto'morrow"])
+                love.graphics.print(bar_width * 100 .. "%", 526, 273 + 38)
+            end
+            if enemy.amount >= 3 then 
+                love.graphics.setColor(255/255, 0/255, 100/255, 1)
+                love.graphics.rectangle("fill", 410, 272 + 38 * 2, 110, 19)
+
+                local bar_width = (enemy.three.hp / enemy.three.mhp)
+                love.graphics.setColor(60/255, 203/255, 128/255, 1)
+                love.graphics.rectangle("fill", 410, 272 + 38 * 2, bar_width * 110, 19)
+                            
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.setFont(fonts["crypto'morrow"])
+                love.graphics.print(bar_width * 100 .. "%", 526, 273 + 38 * 2)
+            end
         end
     end
 

@@ -4,21 +4,23 @@ local enemy = {}
 local player_atk_var = {}
 
 enemy.one = {
-    name = "Dummy_0",
-    hp = 1,
+    name = "Drama",
+    hp = 150,
+    mhp = 200,
     at = 1,
     df = 1,
     x = nil,
     y = nil,
     alive = true,
-    dodge = true,
+    dodge = false,
     current_anim = "static",
     default_anim = "static,"
 }
 
 enemy.two = {
-    name = "Dummy_1",
+    name = "Romance",
     hp = 200,
+    mhp = 200,
     at = 5,
     df = 5,
     x = nil,
@@ -31,14 +33,15 @@ enemy.two = {
 
 
 enemy.three = {
-    name = "Dummy_2",
-    hp = 200,
+    name = "Bloodshed",
+    hp = 1,
+    mhp = 1,
     at = 5,
     df = 5,
     x = nil,
     y = nil,
     alive = true,
-    dodge = false,
+    dodge = true,
     current_anim = "static",
     default_anim = "static,"
 }
@@ -90,10 +93,10 @@ function enemy.load()
 
     enemy.turn = 1 -- current turn, only use 0 if you want the enemy to have the first turn.
     enemy.flavour_texts = {
-    "* Template dummies.",
-    "* They like... hate you?",
-    "* Woah.",
-    "* Here for your liver."
+    "* Template dummies./w/w/n* Turn 1",
+    "* They like... hate you?/w/w/n* Turn 2",
+    "* Woah./w/w/n* Turn 3",
+    "* Here for your liver./w/w/n* Turn 4"
     }
 end
 

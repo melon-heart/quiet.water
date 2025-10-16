@@ -81,8 +81,9 @@ end
 
 function love.draw()
     love.graphics.setColor(1, 1, 1, 1)
-    gradient()
+    -- gradient()
     -- love.graphics.draw(love.graphics.newImage("8.png"))
+    -- love.graphics.draw(love.graphics.newImage("image-dicvk7kw.png"))
     if scene.i == "battle" then
         battle_engine.draw()
     elseif scene.i == "overworld" then
