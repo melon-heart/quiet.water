@@ -79,7 +79,17 @@ local function move_around(i)
         soul.x = 62
         soul.y = 274 + (player.ii * 38)
 
+        if key_state.down.just_pressed then
+            player.ii = (player.ii + 1) % 3
+            sounds["squeak"]:play()
+        end
+        if key_state.up.just_pressed then
+            player.ii = (player.ii - 1) % 3
+            sounds["squeak"]:play()
+        end
+
         if key_state.x.just_pressed then
+            player.ii = 0
             player.iii = 0
                 table.insert(writers, typewriter.new(
                 55, 268,

@@ -32,6 +32,7 @@ function attacks.load()
     attacks.x = 0
     attacks.y = 0
     attacks.spawned = false
+    attacks.phase = "target"
 
     tough_glove.press = love.graphics.newImage("assets/battle_assets/attacks/press.png")
     tough_glove.z = love.graphics.newImage("assets/battle_assets/attacks/Z.png")
@@ -89,7 +90,7 @@ function attacks.update(i) -- i = dt
             sounds["punchweak"]:clone():play()
         end
         if tough_glove.timer >= 1 or tough_glove.amount_pressed >= 5 then
-            if tough_glove.timer >= 1 and tough_glove.amount_pressed <= 2 then
+            if tough_glove.timer >= 1 and tough_glove.amount_pressed <= 3 then
                 tough_glove.phase = "press_z"
                 tough_glove.timer = 0
                 tough_glove.amount_pressed = 0

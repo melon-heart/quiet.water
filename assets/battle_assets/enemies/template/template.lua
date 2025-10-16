@@ -60,13 +60,12 @@ end
 
 function enemy.spawn_player_attack(i, ii) -- this handles the player attack, and its consequences.
     -- pretend there's stuff here
-    attacks.spawned = true
     hurt_enemy(i, ii)
 end
 
 local function load_custom_variables() -- load everything you need here
-    -- enemy.music = love.audio.newSource("assets/battle_assets/music/dummy_song.ogg", "stream")
-    --enemy.music:setLooping(true)
+    enemy.music = love.audio.newSource("assets/battle_assets/music/odd_water.mp3", "stream")
+    enemy.music:setLooping(true)
 
     enemy.one.x = 100
     enemy.one.y = 150
@@ -80,6 +79,8 @@ local function load_custom_variables() -- load everything you need here
     enemy.kr = 0 -- 1 or 0 (1 meaning yeah, 0 meaning nah)
 
     -- okay. don't change anything under here.
+
+    enemy.amount = 3
     
 end
 
@@ -97,9 +98,9 @@ function enemy.load()
 end
 
 function enemy.update(i) --i = dt
-    --if not enemy.music:isPlaying() then
-    --        enemy.music:play()
-    --end
+    if not enemy.music:isPlaying() then
+            enemy.music:play()
+    end
 
 end
 
