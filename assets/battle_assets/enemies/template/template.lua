@@ -90,9 +90,9 @@ local function load_custom_variables() -- load everything you need here
     enemy.flee_chance = "random"
     enemy.flee_able = true
 
-    -- okay. don't change anything under here.
+    enemy.amount = 3 -- your... enemy amount? yeah, dude. don't lie to the code.
 
-    enemy.amount = 3
+    -- okay. don't change anything under here.
     
 end
 

@@ -210,96 +210,55 @@ end
 
 local function draw_text()
     love.graphics.setColor(1, 1, 1)
+
     if player.iii == "button0" or player.iii == "button1" then
         love.graphics.setFont(fonts["determination-mono"])
-        if enemy.amount >= 1 then 
-            if enemy.one.alive then
-                    love.graphics.setColor(1, 1, 1)
-                    if enemy.one.mercy_percent >= enemy.one.mercy_max then 
-                        love.graphics.setColor(255/255, 183/255, 197/255)
-                    end
-                love.graphics.print("* " .. enemy.one.name, 100, 268)
+
+        for i = 1, enemy.amount do
+            local e = enemy[i == 1 and "one" or i == 2 and "two" or "three"]
+            local y = 268 + (i - 1) * 38
+
+            if e.alive then
+                local color = {1, 1, 1}
+                if e.mercy_percent >= e.mercy_max then
+                    color = {255/255, 183/255, 197/255}
+                end
+                love.graphics.setColor(color)
+                love.graphics.print("* " .. e.name, 100, y)
             else
-                    love.graphics.setColor(1, 1, 1, 0.5)
-                love.graphics.print("* Deceased", 100, 268)
-                    love.graphics.setColor(1, 1, 1)
+                love.graphics.setColor(1, 1, 1, 0.5)
+                love.graphics.print("* Deceased", 100, y)
             end
-        end
-        if enemy.amount >= 2 then 
-            if enemy.two.alive then
-                    love.graphics.setColor(1, 1, 1)
-                    if enemy.two.mercy_percent >= enemy.two.mercy_max then 
-                        love.graphics.setColor(255/255, 183/255, 197/255)
-                    end
-                love.graphics.print("* " .. enemy.two.name, 100, 306)
-            else
-                    love.graphics.setColor(1, 1, 1, 0.5)
-                love.graphics.print("* Deceased", 100, 306)
-                    love.graphics.setColor(1, 1, 1)
-            end
-        end
-        if enemy.amount >= 3 then 
-            if enemy.three.alive then
-                    love.graphics.setColor(1, 1, 1)
-                    if enemy.three.mercy_percent >= enemy.three.mercy_max then 
-                        love.graphics.setColor(255/255, 183/255, 197/255)
-                    end
-                love.graphics.print("* " .. enemy.three.name, 100, 344)
-            else
-                    love.graphics.setColor(1, 1, 1, 0.5)
-                love.graphics.print("* Deceased", 100, 344)
-                    love.graphics.setColor(1, 1, 1)
-            end
+
+            love.graphics.setColor(1, 1, 1)
         end
 
-        if player.iii == "button0" then 
-            if enemy.amount >= 1 then 
+        if player.iii == "button0" then
+            for i = 1, enemy.amount do
+                local e = enemy[i == 1 and "one" or i == 2 and "two" or "three"]
+                local y = 272 + (i - 1) * 38
+                local bar_width = e.hp / e.mhp
+
                 love.graphics.setColor(255/255, 0/255, 100/255, 1)
-                love.graphics.rectangle("fill", 410, 272, 110, 19)
+                love.graphics.rectangle("fill", 410, y, 110, 19)
 
-                local bar_width = (enemy.one.hp / enemy.one.mhp)
                 love.graphics.setColor(60/255, 203/255, 128/255, 1)
-                love.graphics.rectangle("fill", 410, 272, bar_width * 110, 19)
+                love.graphics.rectangle("fill", 410, y, bar_width * 110, 19)
 
                 love.graphics.setColor(1, 1, 1)
                 love.graphics.setFont(fonts["crypto'morrow"])
-                love.graphics.print(bar_width * 100 .. "%", 526, 273)
-            end
-            if enemy.amount >= 2 then 
-                love.graphics.setColor(255/255, 0/255, 100/255, 1)
-                love.graphics.rectangle("fill", 410, 272 + 38, 110, 19)
-
-                local bar_width = (enemy.two.hp / enemy.two.mhp)
-                love.graphics.setColor(60/255, 203/255, 128/255, 1)
-                love.graphics.rectangle("fill", 410, 272 + 38, bar_width * 110, 19)
-
-                love.graphics.setColor(1, 1, 1)
-                love.graphics.setFont(fonts["crypto'morrow"])
-                love.graphics.print(bar_width * 100 .. "%", 526, 273 + 38)
-            end
-            if enemy.amount >= 3 then 
-                love.graphics.setColor(255/255, 0/255, 100/255, 1)
-                love.graphics.rectangle("fill", 410, 272 + 38 * 2, 110, 19)
-
-                local bar_width = (enemy.three.hp / enemy.three.mhp)
-                love.graphics.setColor(60/255, 203/255, 128/255, 1)
-                love.graphics.rectangle("fill", 410, 272 + 38 * 2, bar_width * 110, 19)
-                            
-                love.graphics.setColor(1, 1, 1)
-                love.graphics.setFont(fonts["crypto'morrow"])
-                love.graphics.print(bar_width * 100 .. "%", 526, 273 + 38 * 2)
+                love.graphics.print(math.floor(bar_width * 100) .. "%", 526, y + 1)
             end
         end
     end
 
     if writers then
         for _, w in ipairs(writers) do
-            if w and w.draw then
-                w:draw()
-            end
+            if w and w.draw then w:draw() end
         end
     end
 end
+
 
 
 function battle_engine.draw(i) -- i = dt
