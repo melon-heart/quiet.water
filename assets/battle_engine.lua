@@ -80,11 +80,11 @@ local function move_around(i)
         soul.y = 273 + (player.ii * 38)
 
         if key_state.down.just_pressed then
-            player.ii = (player.ii + 1) % 3
+            player.ii = (player.ii + 1) % enemy.amount
             sounds["squeak"]:play()
         end
         if key_state.up.just_pressed then
-            player.ii = (player.ii - 1) % 3
+            player.ii = (player.ii - 1) % enemy.amount
             sounds["squeak"]:play()
         end
 
@@ -103,11 +103,11 @@ local function move_around(i)
         soul.y = 273 + (player.ii * 38)
 
         if key_state.down.just_pressed then
-            player.ii = (player.ii + 1) % 3
+            player.ii = (player.ii + 1) % enemy.amount
             sounds["squeak"]:play()
         end
         if key_state.up.just_pressed then
-            player.ii = (player.ii - 1) % 3
+            player.ii = (player.ii - 1) % enemy.amount
             sounds["squeak"]:play()
         end
 
@@ -212,26 +212,44 @@ local function draw_text()
     love.graphics.setColor(1, 1, 1)
     if player.iii == "button0" or player.iii == "button1" then
         love.graphics.setFont(fonts["determination-mono"])
-        if enemy.one.alive then
-            love.graphics.print("* " .. enemy.one.name, 100, 268)
-        else
-                love.graphics.setColor(1, 1, 1, 0.5)
-            love.graphics.print("* Deceased", 100, 268)
-                love.graphics.setColor(1, 1, 1)
+        if enemy.amount >= 1 then 
+            if enemy.one.alive then
+                    love.graphics.setColor(1, 1, 1)
+                    if enemy.one.mercy_percent >= enemy.one.mercy_max then 
+                        love.graphics.setColor(255/255, 183/255, 197/255)
+                    end
+                love.graphics.print("* " .. enemy.one.name, 100, 268)
+            else
+                    love.graphics.setColor(1, 1, 1, 0.5)
+                love.graphics.print("* Deceased", 100, 268)
+                    love.graphics.setColor(1, 1, 1)
+            end
         end
-        if enemy.two.alive then
-            love.graphics.print("* " .. enemy.two.name, 100, 306)
-        else
-                love.graphics.setColor(1, 1, 1, 0.5)
-            love.graphics.print("* Deceased", 100, 306)
-                love.graphics.setColor(1, 1, 1)
+        if enemy.amount >= 2 then 
+            if enemy.two.alive then
+                    love.graphics.setColor(1, 1, 1)
+                    if enemy.two.mercy_percent >= enemy.two.mercy_max then 
+                        love.graphics.setColor(255/255, 183/255, 197/255)
+                    end
+                love.graphics.print("* " .. enemy.two.name, 100, 306)
+            else
+                    love.graphics.setColor(1, 1, 1, 0.5)
+                love.graphics.print("* Deceased", 100, 306)
+                    love.graphics.setColor(1, 1, 1)
+            end
         end
-        if enemy.three.alive then
-            love.graphics.print("* " .. enemy.three.name, 100, 344)
-        else
-                love.graphics.setColor(1, 1, 1, 0.5)
-            love.graphics.print("* Deceased", 100, 344)
-                love.graphics.setColor(1, 1, 1)
+        if enemy.amount >= 3 then 
+            if enemy.three.alive then
+                    love.graphics.setColor(1, 1, 1)
+                    if enemy.three.mercy_percent >= enemy.three.mercy_max then 
+                        love.graphics.setColor(255/255, 183/255, 197/255)
+                    end
+                love.graphics.print("* " .. enemy.three.name, 100, 344)
+            else
+                    love.graphics.setColor(1, 1, 1, 0.5)
+                love.graphics.print("* Deceased", 100, 344)
+                    love.graphics.setColor(1, 1, 1)
+            end
         end
 
         if player.iii == "button0" then 

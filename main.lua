@@ -14,7 +14,7 @@ soul = {}
 scene = {
     i = "battle", -- this is the current scene
     ii = "template", -- this is the enemy currently loaded
-    iii = "0", -- this is the map currently loaded
+    iii = "template", -- this is the map currently loaded
     iv = false -- this has no meaning yet.
 }
 
@@ -22,7 +22,7 @@ fonts = {}
 sounds = {}
 
 function love.load()
-    love.audio.setVolume(1)
+    love.audio.setVolume(0)
     fonts["8bitoperator_jve"] = love.graphics.newFont("assets/fonts/8bitoperator_jve.ttf", 32)
     fonts["dotumche"] = love.graphics.newFont("assets/fonts/dotumche.ttf")
     fonts["determination-mono"] = love.graphics.newFont("assets/fonts/determination-mono.ttf", 32)

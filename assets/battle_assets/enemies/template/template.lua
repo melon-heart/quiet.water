@@ -13,6 +13,8 @@ enemy.one = {
     y = nil,
     alive = true,
     dodge = false,
+    mercy_percent = 0,
+    mercy_max = 10,
     current_anim = "static",
     default_anim = "static,"
 }
@@ -27,6 +29,8 @@ enemy.two = {
     y = nil,
     alive = true,
     dodge = false, 
+    mercy_percent = 0,
+    mercy_max = 10,
     current_anim = "static",
     default_anim = "static,"
 }
@@ -42,6 +46,8 @@ enemy.three = {
     y = nil,
     alive = true,
     dodge = true,
+    mercy_percent = 0,
+    mercy_max = 99,
     current_anim = "static",
     default_anim = "static,"
 }
@@ -80,6 +86,9 @@ local function load_custom_variables() -- load everything you need here
     enemy.three.y = 150
 
     enemy.kr = 0 -- 1 or 0 (1 meaning yeah, 0 meaning nah)
+
+    enemy.flee_chance = "random"
+    enemy.flee_able = true
 
     -- okay. don't change anything under here.
 
