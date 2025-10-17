@@ -91,6 +91,8 @@ local function load_custom_variables() -- load everything you need here
     enemy.flee_able = true
 
     enemy.amount = 3 -- your... enemy amount? yeah, dude. don't lie to the code.
+    
+    enemy.fight_to_progress = false -- you sans fight people will like this.
 
     -- okay. don't change anything under here.
     
