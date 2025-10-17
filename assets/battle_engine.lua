@@ -121,6 +121,35 @@ local function move_around(i)
                 sounds["speak1"] 
                 ))
         end
+    elseif player.iii == "button3" then
+        soul.x = 62
+        soul.y = 273 + (player.ii * 38)
+
+        local flee_num = enemy.flee_able and 2 or 1
+
+        if key_state.down.just_pressed then
+            player.ii = (player.ii + 1) % flee_num
+            if enemy.flee_able then
+                sounds["squeak"]:play()
+            end
+        end
+        if key_state.up.just_pressed then
+            player.ii = (player.ii - 1) % flee_num
+            if enemy.flee_able then
+                sounds["squeak"]:play()
+            end
+        end
+
+        if key_state.x.just_pressed then
+            player.ii = 0
+            player.iii = 0
+                table.insert(writers, typewriter.new(
+                55, 268,
+                enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
+                fonts["determination-mono"],
+                sounds["speak1"] 
+                ))
+        end
     end
 end
 
@@ -252,14 +281,26 @@ local function draw_text()
         end
     end
 
+    if player.iii == "button3" then 
+        love.graphics.setFont(fonts["determination-mono"])
+
+        love.graphics.setColor(1, 1, 1)
+        if enemy.one.mercy_percent >= enemy.one.mercy_max or enemy.two.mercy_percent >= enemy.two.mercy_max or enemy.three.mercy_percent >= enemy.three.mercy_max then
+            love.graphics.setColor(255/255, 183/255, 197/255)
+        end
+        love.graphics.print("* Spare", 100, 268)
+
+        if enemy.flee_able then
+            love.graphics.print("* Flee", 100, 268 + 38)
+        end
+    end
+
     if writers then
         for _, w in ipairs(writers) do
             if w and w.draw then w:draw() end
         end
     end
 end
-
-
 
 function battle_engine.draw(i) -- i = dt
     draw_action_ui()
