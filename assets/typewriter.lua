@@ -191,16 +191,23 @@ function typewriter:finish_all()
     self.finished = true
 end
 
-function typewriter:clear()
+function typewriter:clear(tbl)
     self.current_text = ""
     self.parsed_segments = {}
     self.char_count = 0
     self.index = 1
     self.timer = 0
     self.wait_time = 0
-    self.finished = true
+    self.finished = false
     self.current_color = {1, 1, 1, 1}
+
+    if tbl and type(tbl) == "table" then
+        for k in pairs(tbl) do
+            tbl[k] = nil
+        end
+    end
 end
+
 
 function typewriter:is_finished()
     return self.finished
