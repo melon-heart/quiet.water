@@ -53,7 +53,7 @@ function battle_engine.load()
     table.insert(writers, typewriter.new(
         55, 268,
         enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
-        fonts["determination-mono"],
+        enemy.flavour_font,
         sounds["speak1"] 
     ))
 end
@@ -181,19 +181,36 @@ local function draw_hp()
     love.graphics.setFont(fonts["hp"])
     love.graphics.print("hp", 244, 406)
 
-    if enemy.kr == 1 then
-        love.graphics.print("kr", 282 + player.mhp * 1.2, 406)
+    local bar_length
+    local colour
+    if player.mhp == 1 then
+        bar_length = 80
+        colour = "grayscale"
+    else
+        bar_length = player.mhp
     end
 
-    love.graphics.setFont(fonts["crypto'morrow"])
-    love.graphics.print(player.hp .. " / " .. player.mhp, 342 + (player.mhp * 1.2) * enemy.kr, 403)
+    if enemy.kr == 1 then
+        love.graphics.print("kr", 282 + (bar_length * 1.2), 406)
+    end
 
-    love.graphics.setColor(255/255, 0/255 ,100/255, 1)
-    love.graphics.rectangle("fill", 275, 400, player.mhp * 1.2, 21)
-    love.graphics.setColor(255/255, 214/255, 0)
-    love.graphics.rectangle("fill", 275, 400, player.hp * 1.2, 21)
+    love.graphics.setFont(fonts["crypto'morrow"]) 
+    love.graphics.print(player.hp .. " / " .. player.mhp, 282 + (bar_length * 1.2) + (40 * enemy.kr), 403)
 
+    love.graphics.setColor(255/255, 0/255 ,100/255)
+    if colour == "grayscale" then
+        love.graphics.setColor(0.344, 0.344, 0.344)
+    end
+    love.graphics.rectangle("fill", 275, 400, bar_length * 1.2, 21)
+
+    local fill_ratio = player.hp / player.mhp
+    love.graphics.setColor(255/255, 245/255, 0)
+    if colour == "grayscale" then
+        love.graphics.setColor(0.863, 0.863, 0.863)
+    end
+    love.graphics.rectangle("fill", 275, 400, bar_length * fill_ratio * 1.2, 21)
 end
+
 
 local function draw_soul()
     love.graphics.setColor(255/255, 0/255 ,100/255, 1)
