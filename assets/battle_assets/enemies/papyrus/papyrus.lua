@@ -55,6 +55,11 @@ enemy.three = {
 local function load_images() -- load the sprites here!
     enemy.reference = love.graphics.newImage("assets/battle_assets/enemies/papyrus/images/reference.png")
     enemy.background = love.graphics.newImage("assets/battle_assets/enemies/papyrus/images/background.png")
+
+    enemy.head0 = love.graphics.newImage("assets/battle_assets/enemies/papyrus/images/head0.png")
+        enemy.hood = love.graphics.newImage("assets/battle_assets/enemies/papyrus/images/hood.png")
+            enemy.legs = love.graphics.newImage("assets/battle_assets/enemies/papyrus/images/legs.png")
+                enemy.head1 = love.graphics.newImage("assets/battle_assets/enemies/papyrus/images/head1.png")
 end
 
 local function hurt_enemy(i, ii) -- i = target
@@ -93,6 +98,8 @@ local function load_custom_variables() -- load everything you need here
     
     enemy.fight_to_progress = false -- you sans fight people will like this.
 
+    enemy.timer = 0
+
     -- okay. don't change anything under here.
     
 end
@@ -104,7 +111,7 @@ function enemy.load()
     enemy.turn = 1 -- current turn, only use 0 if you want the enemy to have the first turn.
     enemy.flavour_font = fonts["sans2"]
     enemy.flavour_texts = {
-    "* WHAT'S GOTTEN INTO HIM?!",
+    "* what's gotten into him...?",
     }
 end
 
@@ -113,13 +120,17 @@ function enemy.update(i) --i = dt
             enemy.music:play()
     end
 
+    enemy.timer = enemy.timer + i
 end
 
 function enemy.draw()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.draw(enemy.background, 0, -20, 0, 2, 2)
     if enemy.one.alive then
-        love.graphics.draw(enemy.reference, enemy.one.x - enemy.reference:getWidth(), enemy.one.y - enemy.reference:getHeight(), 0, 2, 2)
+        -- love.graphics.draw(enemy.reference, enemy.one.x - enemy.reference:getWidth(), enemy.one.y - enemy.reference:getHeight(), 0, 2, 2)
+        love.graphics.draw(enemy.legs, enemy.one.x - enemy.legs:getWidth() + 5, enemy.one.y - enemy.legs:getHeight() + 66, 0, 2, 2)
+        love.graphics.draw(enemy.hood, enemy.one.x - enemy.hood:getWidth() - 8 - math.sin(enemy.timer * 1.5) * 2, enemy.one.y - enemy.hood:getHeight() - 39 - math.cos(enemy.timer * 2) * 1, 0 - math.cos(enemy.timer * 2) * 0.02, 2, 2)
+        love.graphics.draw(enemy.head0, enemy.one.x - enemy.head0:getWidth() - 20 - math.sin(enemy.timer * 1.5) * 2, enemy.one.y - enemy.head0:getHeight() - 68 - math.cos(enemy.timer * 2) * 1, 0, 2, 2)
     end
 end
 
