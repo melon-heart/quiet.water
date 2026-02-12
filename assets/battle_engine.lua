@@ -204,7 +204,7 @@ local function draw_hp()
     love.graphics.rectangle("fill", 275, 400, bar_length * 1.2, 21)
 
     local fill_ratio = player.hp / player.mhp
-    love.graphics.setColor(229/255, 235/255, 95/255)
+    love.graphics.setColor(241/255, 255/255, 100/255)
     if colour == "grayscale" then
         love.graphics.setColor(0.863, 0.863, 0.863)
     end
