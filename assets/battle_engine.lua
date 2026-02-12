@@ -321,7 +321,7 @@ local function draw_text()
     end
 end
 
-function battle_engine.draw(i) -- i = dt
+function battle_engine.draw(i) -- i = dt, layering from bottom to top.
     draw_action_ui()
     draw_hp()
     enemy.draw(i)
