@@ -5,10 +5,10 @@ function player.load()
     player.name = "melon"
     player.lv = 8
     player.mhp = 16 + (player.lv * 4)
-    player.hp = player.mhp
+    player.hp = player.mhp /2
     player.exp = 0
     player.g = 0
-    player.weapon = "tough_glove"
+    player.weapon = "tough_glove" -- stick, toy_knife, tough_glove, ballet_shoes, torn_notebook, burnt_pan, empty_gun, frying_pan, real_knife ONLY one of these are implemented though. (currently. won't update this text in future though.)
     player.armour = "tutu" -- unfortunately, armour does nothing... because i'm too lazy to make it do anything. do it yourself.
 
     player.i = 0 -- selection

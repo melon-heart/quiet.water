@@ -204,7 +204,7 @@ local function draw_hp()
     love.graphics.rectangle("fill", 275, 400, bar_length * 1.2, 21)
 
     local fill_ratio = player.hp / player.mhp
-    love.graphics.setColor(255/255, 245/255, 0)
+    love.graphics.setColor(229/255, 235/255, 95/255)
     if colour == "grayscale" then
         love.graphics.setColor(0.863, 0.863, 0.863)
     end
@@ -282,18 +282,20 @@ local function draw_text()
         if player.iii == "button0" then
             for i = 1, enemy.amount do
                 local e = enemy[i == 1 and "one" or i == 2 and "two" or "three"]
-                local y = 272 + (i - 1) * 38
-                local bar_width = e.hp / e.mhp
+                if not e.dodge then
+                    local y = 272 + (i - 1) * 38
+                    local bar_width = e.hp / e.mhp
 
-                love.graphics.setColor(255/255, 0/255, 100/255, 1)
-                love.graphics.rectangle("fill", 410, y, 110, 19)
+                    love.graphics.setColor(255/255, 0/255, 100/255, 1)
+                    love.graphics.rectangle("fill", 470, y, 110, 19)
 
-                love.graphics.setColor(60/255, 203/255, 128/255, 1)
-                love.graphics.rectangle("fill", 410, y, bar_width * 110, 19)
+                    love.graphics.setColor(60/255, 203/255, 128/255, 1)
+                    love.graphics.rectangle("fill", 470, y, bar_width * 110, 19)
 
-                love.graphics.setColor(1, 1, 1)
-                love.graphics.setFont(fonts["crypto'morrow"])
-                love.graphics.print(math.floor(bar_width * 100) .. "%", 526, y + 1)
+                    love.graphics.setColor(1, 1, 1)
+                    love.graphics.setFont(fonts["crypto'morrow"])
+                    love.graphics.print(math.floor(bar_width * 100) .. "%", 386, y + 1)
+                end
             end
         end
     end

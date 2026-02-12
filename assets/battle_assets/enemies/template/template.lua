@@ -104,6 +104,7 @@ function enemy.load()
 
     enemy.turn = 1 -- current turn, only use 0 if you want the enemy to have the first turn.
     enemy.flavour_font = fonts["determination-mono"]
+    enemy.flavour_texts = "random" -- or set
     enemy.flavour_texts = {
     "* Template dummies./w/w/n* Turn 1",
     "* They like... hate you?/w/w/n* Turn 2",
