@@ -8,8 +8,8 @@ writers = {}
 soul = {}
 scene = {
     i = "battle",
-    ii = "template",
-    iii = "template",
+    ii = "template", -- current enemy  
+    iii = "template", -- idfk i actually forgot
     iv = false
 }
 fonts = {}

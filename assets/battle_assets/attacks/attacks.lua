@@ -1,5 +1,6 @@
 -- attacks.lua, i recommend not touching this script.
 local attacks = {}
+local bullseye = {}
 local tough_glove = {}
 local enemy = nil
 
@@ -22,6 +23,19 @@ local function tough_glove_quantise()
     end
 end
 
+local function bullseye_quantise()
+    local frame_width, frame_height = 14, 128
+    local image_width, image_height = bullseye.bar:getDimensions()
+
+    bullseye.quads = {}
+    for y = 0, image_height - frame_height, frame_height do
+        for x = 0, image_width - frame_width, frame_width do
+            local quad = love.graphics.newQuad(x, y, frame_width, frame_height, image_width, image_height)
+            table.insert(bullseye.quads, quad)
+        end
+    end
+end
+
 function attacks.load()
 
     enemy = load_enemy()
@@ -33,6 +47,15 @@ function attacks.load()
     attacks.y = 0
     attacks.spawned = false
     attacks.phase = "target"
+
+    bullseye.bullseye = love.graphics.newImage("assets/battle_assets/attacks/bullseye.png")
+    bullseye.bar = love.graphics.newImage("assets/battle_assets/attacks/bar.png") -- should be quads of 14x128y
+    bullseye.timer = 0
+    bullseye.x = 0 
+    bullseye.pressed = false 
+    bullseye.open = false
+
+    bullseye_quantise()
 
     tough_glove.press = love.graphics.newImage("assets/battle_assets/attacks/press.png")
     tough_glove.z = love.graphics.newImage("assets/battle_assets/attacks/Z.png")
@@ -47,9 +70,9 @@ end
 
 function attacks.update(i) -- i = dt
 
-    if love.keyboard.isDown(1) then -- just for testing
-        attacks.spawned = true
-    end
+    --if love.keyboard.isDown(1) then -- just for testing
+    --    attacks.spawned = true
+    --end
 
     if player.ii == 0 then 
         attacks.x = enemy.one.x
@@ -61,6 +84,25 @@ function attacks.update(i) -- i = dt
         attacks.x = enemy.three.x
         attacks.y = enemy.three.y
     end
+
+    if player.iii == "aim" then
+        if bullseye.open == false then
+            bullseye.open = true
+            bullseye.timer = 0
+        end
+
+        bullseye.timer = bullseye.timer + i * 8
+
+        if key_state.z.just_pressed then
+            bullseye.pressed = true
+            sounds["select"]:play()
+        end
+
+    else
+        bullseye.open = false
+        bullseye.pressed = false
+    end
+
     if attacks.spawned then
         if tough_glove.phase == "fist" then
         tough_glove.timer = tough_glove.timer + i * 8
@@ -107,18 +149,34 @@ end
 
 function attacks.draw(i) -- i = dt  
     -- testing
-    if attacks.spawned then
-            if player.weapon == "tough_glove" then
-        if tough_glove.phase == "fist" then
-            love.graphics.draw(tough_glove.image, tough_glove.quads[math.floor(tough_glove.timer % 3) + 1], attacks.x, attacks.y, 0, 2 + math.abs(math.sin(tough_glove.timer)), 2 + math.abs(math.sin(tough_glove.timer)), select(3, tough_glove.quads[1]:getViewport()) / 2, select(4, tough_glove.quads[1]:getViewport()) / 2)
-        elseif tough_glove.phase == "flash" then
-            love.graphics.draw(tough_glove.image, tough_glove.quads[math.floor(tough_glove.timer % 3) + 4], attacks.x - 50, attacks.y - 110, 0, 2, 2)
-        elseif tough_glove.phase == "press_z" then
-            love.graphics.draw(tough_glove.press, attacks.x - 22 + tough_glove.offset[1], attacks.y - 22 + tough_glove.offset[2])
-            love.graphics.draw(tough_glove.z, attacks.x- 22 + tough_glove.offset[1] + math.random(-2, 2), attacks.y - 22 + tough_glove.offset[2] + math.random(-2, 2))
+    if bullseye.open then
+        love.graphics.setColor(1, 1, 1)
+        if bullseye.pressed then
+            love.graphics.draw(bullseye.bar, bullseye.quads[1], 20, 256)
+        else
+            love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer % 2) + 1], 20, 256)
         end
+        local iw = bullseye.bullseye:getDimensions()
+        local t = math.min(bullseye.timer / 3, 1)
+        local scale = t * t * (3 - 2 * t) -- smoothstep easing
+
+        love.graphics.setColor(1, 1, 1, scale + 0.1)
+        love.graphics.draw(bullseye.bullseye, 38 + (562 / 2), 256, 0, scale, 1, iw / 2)
     end
+
+    if attacks.spawned then
+        if player.weapon == "tough_glove" then
+            if tough_glove.phase == "fist" then
+                love.graphics.draw(tough_glove.image, tough_glove.quads[math.floor(tough_glove.timer % 3) + 1], attacks.x, attacks.y, 0, 2 + math.abs(math.sin(tough_glove.timer)), 2 + math.abs(math.sin(tough_glove.timer)), select(3, tough_glove.quads[1]:getViewport()) / 2, select(4, tough_glove.quads[1]:getViewport()) / 2)
+            elseif tough_glove.phase == "flash" then
+                love.graphics.draw(tough_glove.image, tough_glove.quads[math.floor(tough_glove.timer % 3) + 4], attacks.x - 50, attacks.y - 110, 0, 2, 2)
+            elseif tough_glove.phase == "press_z" then
+                love.graphics.draw(tough_glove.press, attacks.x - 22 + tough_glove.offset[1], attacks.y - 22 + tough_glove.offset[2])
+                love.graphics.draw(tough_glove.z, attacks.x- 22 + tough_glove.offset[1] + math.random(-2, 2), attacks.y - 22 + tough_glove.offset[2] + math.random(-2, 2))
+            end
+        end
     end
 end
 
 return attacks
+ --They can't see.      hide it in my eyes

@@ -88,6 +88,10 @@ local function move_around(i)
             sounds["squeak"]:play()
         end
 
+        if key_state.z.just_pressed then
+            player.iii = "aim"
+            sounds["select"]:play()
+        end
         if key_state.x.just_pressed then
             player.ii = 0
             player.iii = 0
@@ -155,6 +159,7 @@ end
 
 function battle_engine.update(i) -- i = dt
     local skip = key_state.x.just_pressed
+    move_around(i)
 
     if writers then
         for _, w in ipairs(writers) do
@@ -169,8 +174,6 @@ function battle_engine.update(i) -- i = dt
     if enemy and enemy.update then
         enemy.update(i)
     end
-
-    move_around(i)
 end
 
 local function draw_hp()
