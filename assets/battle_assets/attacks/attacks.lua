@@ -88,9 +88,21 @@ function attacks.update(i) -- i = dt
         if bullseye.open == false then
             bullseye.open = true
             bullseye.timer = 0
+            bullseye.stage = "open"
         end
 
-        bullseye.timer = bullseye.timer + i
+        if bullseye.stage == "open" then
+            bullseye.timer = bullseye.timer + i
+        elseif bullseye.stage == "closing" or bullseye.stage == "missed" then
+            bullseye.timer = bullseye.timer - i
+            if bullseye.timer <= 0 then
+                bullseye.stage = "closed"
+                bullseye.open = false
+                bullseye.pressed = false
+                bullseye.timer = 0
+                player.iii = "enemy_dialogue"
+            end
+        end
 
         if key_state.z.just_pressed then
             bullseye.pressed = true
@@ -98,7 +110,6 @@ function attacks.update(i) -- i = dt
                 attacks.spawned = true
             end
             enemy:prepare_for_damage(player.ii)
-            bullseye.stage = "closing"
         end
 
     else
@@ -134,6 +145,7 @@ function attacks.update(i) -- i = dt
                 sounds["punchweak"]:play()
             end
             enemy:hurt_enemy(player.ii, tough_glove.amount_pressed - 3 * player.total_atk)
+            bullseye.stage = "closing"
         end
     elseif tough_glove.phase == "flash" then
         tough_glove.timer = tough_glove.timer + i * 8
@@ -170,17 +182,26 @@ end
 function attacks.draw(i) -- i = dt  
     -- testing
     if bullseye.open then
-        local iw = bullseye.bullseye:getDimensions()
-        local t = math.min(bullseye.timer * 2, 1)
-        local scale = t * t * (3 - 2 * t)
-
-        love.graphics.setColor(1, 1, 1, scale + 0.1)
-        love.graphics.draw(bullseye.bullseye, 38 + (562 / 2), 256, 0, scale, 1, iw / 2)
-        love.graphics.setColor(1, 1, 1)
-        if bullseye.pressed then
-            love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer * 8 % 2) + 1], bullseye.x, 256)
-        else
-            love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x, 256)
+            local iw = bullseye.bullseye:getDimensions()
+            local t = math.min(bullseye.timer * 2, 1)
+            local scale = t * t * (3 - 2 * t)
+        if bullseye.stage == "open" then
+            love.graphics.setColor(1, 1, 1, scale + 0.1)
+            love.graphics.draw(bullseye.bullseye, 38 + (562 / 2), 256, 0, scale, 1, iw / 2)
+            love.graphics.setColor(1, 1, 1)
+            if bullseye.pressed then
+                love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer * 8 % 2) + 1], bullseye.x, 256)
+            else
+                love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x, 256)
+            end
+        elseif bullseye.stage == "closing" or bullseye.stage == "missed" then
+            love.graphics.setColor(1, 1, 1, scale + 0.1)
+            love.graphics.draw(bullseye.bullseye, 38 + (562 / 2), 256, 0, scale, 1, iw / 2)
+            if bullseye.pressed then
+                love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer * 8 % 2) + 1], bullseye.x, 256)
+            else
+                love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x, 256)
+            end
         end
     end
 

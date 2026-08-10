@@ -50,7 +50,7 @@ function battle_engine.load()
         enemy.load()
     end
 
-    attacks.load(enemy)   -- pass the single shared instance in
+    attacks.load(enemy)
 
     table.insert(writers, typewriter.new(
         55, 268,
@@ -61,6 +61,17 @@ function battle_engine.load()
 end
 
 local function move_around(i)
+
+    if player.iii == "aim" then
+        soul.x = - 16
+        soul.y = - 16
+    end
+
+    if player.iii == "enemy_dialogue" then
+        soul.x = bullet_box.x - 8
+        soul.y = bullet_box.y - 8
+    end
+
     if player.iii == 0 then
         if key_state.right.just_pressed then
             player.i = (player.i + 1) % 4
@@ -92,6 +103,7 @@ local function move_around(i)
 
         if key_state.z.just_pressed then
             player.iii = "aim"
+            player.i = -1
             sounds["select"]:play()
             key_state.z.just_pressed = false
         end
@@ -318,6 +330,7 @@ local function draw_text()
         end
         love.graphics.print("* Spare", 100, 268)
 
+        love.graphics.setColor(1, 1, 1)
         if enemy.flee_able then
             love.graphics.print("* Flee", 100, 268 + 38)
         end

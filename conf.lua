@@ -3,6 +3,7 @@ function love.conf(t)
     t.window.height = 480
     t.window.fullscreen = false
     t.window.title = "quiet water"
+    t.window.vsync = false
 
     -- t.window.icon = "icon.png"
 end

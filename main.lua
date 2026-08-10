@@ -57,12 +57,10 @@ function love.load()
     if player and player.load then player.load() end
     if battle_engine and battle_engine.load then battle_engine.load() end
 
-    -- Ripple setup
     local w, h = love.graphics.getDimensions()
     ripple.canvas = love.graphics.newCanvas(w, h)
     ripple.shader = love.graphics.newShader("ripple.glsl")
 
-    -- Send all uniforms matching the original GML names
     ripple.shader:send("frequency",     ripple.frequency)
     ripple.shader:send("amplitude",     ripple.amplitude)
     ripple.shader:send("ripple_rate",   ripple.ripple_rate)
