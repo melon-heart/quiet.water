@@ -54,6 +54,7 @@ function attacks.load()
     bullseye.x = 0 
     bullseye.pressed = false 
     bullseye.open = false
+    bullseye.bar_side = "right" -- or "right"
 
     bullseye_quantise()
 
@@ -91,16 +92,25 @@ function attacks.update(i) -- i = dt
             bullseye.timer = 0
         end
 
-        bullseye.timer = bullseye.timer + i * 8
+        bullseye.timer = bullseye.timer + i
 
         if key_state.z.just_pressed then
             bullseye.pressed = true
-            sounds["select"]:play()
         end
 
     else
         bullseye.open = false
         bullseye.pressed = false
+    end
+
+    if bullseye.open then
+        if not bullseye.pressed then
+            if bullseye.bar_side == "left" then
+                bullseye.x = 38 + (562 * (bullseye.timer * 1.8 % 3) / 3)
+            elseif bullseye.bar_side == "right" then
+                bullseye.x = 628 - (38 + (562 * (bullseye.timer * 1.8 % 3) / 3))
+            end
+        end
     end
 
     if attacks.spawned then
@@ -150,18 +160,18 @@ end
 function attacks.draw(i) -- i = dt  
     -- testing
     if bullseye.open then
-        love.graphics.setColor(1, 1, 1)
-        if bullseye.pressed then
-            love.graphics.draw(bullseye.bar, bullseye.quads[1], 20, 256)
-        else
-            love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer % 2) + 1], 20, 256)
-        end
         local iw = bullseye.bullseye:getDimensions()
-        local t = math.min(bullseye.timer / 3, 1)
-        local scale = t * t * (3 - 2 * t) -- smoothstep easing
+        local t = math.min(bullseye.timer * 2, 1)
+        local scale = t * t * (3 - 2 * t)
 
         love.graphics.setColor(1, 1, 1, scale + 0.1)
         love.graphics.draw(bullseye.bullseye, 38 + (562 / 2), 256, 0, scale, 1, iw / 2)
+        love.graphics.setColor(1, 1, 1)
+        if bullseye.pressed then
+            love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x, 256)
+        else
+            love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer % 2) + 1], bullseye.x, 256)
+        end
     end
 
     if attacks.spawned then

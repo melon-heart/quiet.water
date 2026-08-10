@@ -135,5 +135,7 @@ function love.draw()
     else
         drawScene()
     end
+    
+    love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 10)
 end
 
