@@ -54,7 +54,8 @@ function attacks.load()
     bullseye.x = 0 
     bullseye.pressed = false 
     bullseye.open = false
-    bullseye.bar_side = "right" -- or "right"
+    bullseye.bar_side = "left" -- or "right"
+    bullseye.stage = "closed"
 
     bullseye_quantise()
 
@@ -96,6 +97,10 @@ function attacks.update(i) -- i = dt
 
         if key_state.z.just_pressed then
             bullseye.pressed = true
+            if player.weapon == "tough_glove" then
+                attacks.spawned = true
+            end
+            bullseye.stage = "closing"
         end
 
     else
@@ -106,9 +111,15 @@ function attacks.update(i) -- i = dt
     if bullseye.open then
         if not bullseye.pressed then
             if bullseye.bar_side == "left" then
-                bullseye.x = 38 + (562 * (bullseye.timer * 1.8 % 3) / 3)
+                bullseye.x = 38 + (562 * (bullseye.timer * 2) / 3)
+                if bullseye.x > 640 then
+                    bullseye.stage = "missed"
+                end
             elseif bullseye.bar_side == "right" then
-                bullseye.x = 628 - (38 + (562 * (bullseye.timer * 1.8 % 3) / 3))
+                bullseye.x = 628 - (38 + (562 * (bullseye.timer * 2) / 3))
+                if bullseye.x < 0 then
+                    bullseye.stage = "missed"
+                end
             end
         end
     end
@@ -168,9 +179,9 @@ function attacks.draw(i) -- i = dt
         love.graphics.draw(bullseye.bullseye, 38 + (562 / 2), 256, 0, scale, 1, iw / 2)
         love.graphics.setColor(1, 1, 1)
         if bullseye.pressed then
-            love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x, 256)
+            love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer * 8 % 2) + 1], bullseye.x, 256)
         else
-            love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer % 2) + 1], bullseye.x, 256)
+            love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x, 256)
         end
     end
 

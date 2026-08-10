@@ -91,8 +91,10 @@ local function move_around(i)
         if key_state.z.just_pressed then
             player.iii = "aim"
             sounds["select"]:play()
+            key_state.z.just_pressed = false
         end
         if key_state.x.just_pressed then
+            key_state.x.just_pressed = false
             player.ii = 0
             player.iii = 0
                 table.insert(writers, typewriter.new(
@@ -116,6 +118,7 @@ local function move_around(i)
         end
 
         if key_state.x.just_pressed then
+            key_state.x.just_pressed = false
             player.ii = 0
             player.iii = 0
                 table.insert(writers, typewriter.new(
@@ -145,6 +148,7 @@ local function move_around(i)
         end
 
         if key_state.x.just_pressed then
+            key_state.x.just_pressed = false
             player.ii = 0
             player.iii = 0
                 table.insert(writers, typewriter.new(
@@ -158,8 +162,8 @@ local function move_around(i)
 end
 
 function battle_engine.update(i) -- i = dt
-    local skip = key_state.x.just_pressed
     move_around(i)
+    local skip = key_state.x.just_pressed
 
     if writers then
         for _, w in ipairs(writers) do
