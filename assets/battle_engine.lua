@@ -8,7 +8,7 @@ local function load_enemy() -- thanks to Asuls!
     return require(enemy_module)
 end
 
-local attacks = require "assets.battle_assets.attacks.attacks" -- the animations for the attacks... might be used for both player and enemy attacks.
+local attacks = require "assets.battle_assets.attacks.attacks" -- the animations for the player attacks.
 
 -- these are default box positionings
 local bullet_box = {
@@ -49,6 +49,8 @@ function battle_engine.load()
     if enemy and enemy.load then
         enemy.load()
     end
+
+    attacks.load(enemy)   -- pass the single shared instance in
 
     table.insert(writers, typewriter.new(
         55, 268,

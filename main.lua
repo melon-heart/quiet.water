@@ -30,7 +30,8 @@ local ripple = {
 }
 
 function love.load()
-    love.audio.setVolume(0.5)
+    love.audio.setVolume(0)
+    math.randomseed(os.time() + os.clock() * 1000000)
     fonts["8bitoperator_jve"] = love.graphics.newFont("assets/fonts/8bitoperator_jve.ttf", 32)
     fonts["dotumche"] = love.graphics.newFont("assets/fonts/dotumche.ttf")
     fonts["determination-mono"] = love.graphics.newFont("assets/fonts/determination-mono.ttf", 32)

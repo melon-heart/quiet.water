@@ -36,12 +36,9 @@ local function bullseye_quantise()
     end
 end
 
-function attacks.load()
+function attacks.load(i) -- i = enemy instance
 
-    enemy = load_enemy()
-    if enemy and enemy.load then
-        enemy.load()
-    end
+    enemy = i
 
     attacks.x = 0
     attacks.y = 0
@@ -100,6 +97,7 @@ function attacks.update(i) -- i = dt
             if player.weapon == "tough_glove" then
                 attacks.spawned = true
             end
+            enemy:prepare_for_damage(player.ii)
             bullseye.stage = "closing"
         end
 
@@ -135,6 +133,7 @@ function attacks.update(i) -- i = dt
             else
                 sounds["punchweak"]:play()
             end
+            enemy:hurt_enemy(player.ii, tough_glove.amount_pressed - 3 * player.total_atk)
         end
     elseif tough_glove.phase == "flash" then
         tough_glove.timer = tough_glove.timer + i * 8
