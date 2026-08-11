@@ -94,14 +94,19 @@ function enemy.hurt_enemy(self, target_or_index, ii) -- ii = player damage
     if not target then
         return
     end
-
-    if target.dodge then
-        target.current_anim = "dodge"
-        target.shake_value = 100 * (math.random(0, 1) == 0 and -1 or 1)
+    
+    if ii ~= "missed" then
+        if target.dodge then
+            target.current_anim = "dodge"
+            target.shake_value = 100 * (math.random(0, 1) == 0 and -1 or 1)
+        else
+            target.current_anim = "hurt"
+            target.shake_value = 50
+            target.hp = target.hp - ii
+        end
     else
-        target.current_anim = "hurt"
-        target.shake_value = 50
-        target.hp = target.hp - ii
+        target.current_anim = target.default_anim
+        target.shake_value = 0
     end
 end
 

@@ -52,12 +52,19 @@ function battle_engine.load()
 
     attacks.load(enemy)
 
-    table.insert(writers, typewriter.new(
-        55, 268,
-        enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
-        enemy.flavour_font,
-        sounds["speak1"] 
-    ))
+    if enemy.turn == 0 then
+        player.iii = "enemy_dialogue"
+        player.i = -1
+    end
+    
+    if player.iii == 0 then
+        table.insert(writers, typewriter.new(
+            55, 268,
+            enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
+            enemy.flavour_font,
+            sounds["speak1"] 
+        ))
+    end
 end
 
 local function move_around(i)

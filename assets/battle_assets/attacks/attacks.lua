@@ -104,7 +104,7 @@ function attacks.update(i) -- i = dt
             end
         end
 
-        if key_state.z.just_pressed then
+        if key_state.z.just_pressed and bullseye.stage == "open" then
             bullseye.pressed = true
             if player.weapon == "tough_glove" then
                 attacks.spawned = true
@@ -118,7 +118,7 @@ function attacks.update(i) -- i = dt
     end
 
     if bullseye.open then
-        if not bullseye.pressed then
+        if not bullseye.pressed and bullseye.stage == "open" then
             if bullseye.bar_side == "left" then
                 bullseye.x = 38 + (562 * (bullseye.timer * 2) / 3)
                 if bullseye.x > 640 then
@@ -170,6 +170,8 @@ function attacks.update(i) -- i = dt
                 tough_glove.amount_pressed = 0
                 attacks.spawned = false
                 tough_glove.offset = {0, 0}
+                bullseye.stage = "missed"
+                enemy:hurt_enemy(player.ii, "missed")
             else
                 tough_glove.phase = "fist"
                 tough_glove.timer = 0
