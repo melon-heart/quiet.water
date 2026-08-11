@@ -1,7 +1,6 @@
 -- template.lua your enemy template! good luck figuring it out...
 
 local enemy = {}
-local player_atk_var = {}
 
 enemy.one = {
     name = "Drama",
