@@ -122,7 +122,7 @@ function attacks.update(i) -- i = dt
                 end
             elseif bullseye.bar_side == "right" then
                 bullseye.x = 628 - (38 + (562 * (bullseye.timer * 2) / 3))
-                if bullseye.x < 0 then
+                if bullseye.x < -14 then
                     bullseye.stage = "missed"
                 end
             end
