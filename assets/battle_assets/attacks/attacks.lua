@@ -118,7 +118,7 @@ function attacks.update(i) -- i = dt
         if not bullseye.pressed and bullseye.stage == "open" then
             if bullseye.bar_side == "left" then
                 bullseye.x = 38 + (562 * (bullseye.timer * 2) / 3)
-                if bullseye.x > 640 then
+                if bullseye.x > 654 then
                     bullseye.stage = "missed"
                 end
             elseif bullseye.bar_side == "right" then
@@ -212,17 +212,17 @@ function attacks.draw(i) -- i = dt
             love.graphics.draw(bullseye.bullseye, 38 + (562 / 2), 256, 0, scale, 1, iw / 2)
             love.graphics.setColor(1, 1, 1)
             if bullseye.pressed then
-                love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer * 8 % 2) + 1], bullseye.x, 256)
+                love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer * 8 % 2) + 1], bullseye.x - 14, 256)
             else
-                love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x, 256)
+                love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x - 14, 256)
             end
         elseif bullseye.stage == "closing" or bullseye.stage == "missed" then
             love.graphics.setColor(1, 1, 1, scale + 0.1)
             love.graphics.draw(bullseye.bullseye, 38 + (562 / 2), 256, 0, scale, 1, iw / 2)
             if bullseye.pressed then
-                love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer * 8 % 2) + 1], bullseye.x, 256)
+                love.graphics.draw(bullseye.bar, bullseye.quads[math.floor(bullseye.timer * 8 % 2) + 1], bullseye.x - 14, 256)
             else
-                love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x, 256)
+                love.graphics.draw(bullseye.bar, bullseye.quads[1], bullseye.x - 14, 256)
             end
         end
     end
