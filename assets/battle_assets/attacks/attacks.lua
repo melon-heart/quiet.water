@@ -4,6 +4,7 @@ local bullseye = {}
 local tough_glove = {}
 local slash = {}
 local enemy = nil
+local damage = {}
 
 local function make_quads(image, frame_width, frame_height)
     local image_width, image_height = image:getDimensions()
@@ -102,7 +103,7 @@ function attacks.update(i) -- i = dt
 
         if key_state.z.just_pressed and bullseye.stage == "open" then
             bullseye.pressed = true
-            if player.weapon == "tough_glove" then
+            if player.weapon then
                 attacks.spawned = true
             end
             enemy:prepare_for_damage(player.ii)
@@ -130,53 +131,73 @@ function attacks.update(i) -- i = dt
     end
 
     if attacks.spawned then
-        if tough_glove.phase == "fist" then
-        tough_glove.timer = tough_glove.timer + i * 8
-        if tough_glove.timer >= 3.2 then 
-            tough_glove.phase = "flash"
-            tough_glove.timer = 0
-            if tough_glove.amount_pressed >= 3 then
-                sounds["punchstrong"]:play()
+
+        if player.weapon == "stick" or player.weapon == "toy_knife" or player.weapon == "real_knife" then
+            if slash.timer < 5.9 then
+                slash.timer = slash.timer + i * 12
+                if slash.timer >= 5.9 then
+                    slash.timer = 5.9
+                end
             else
-                sounds["punchweak"]:play()
-            end
-            local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
-            local hit_mult = get_hit_multiplier()
-            local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
-            enemy:hurt_enemy(player.ii, damage)
-            bullseye.stage = "closing"
-        end
-    elseif tough_glove.phase == "flash" then
-        tough_glove.timer = tough_glove.timer + i * 8
-        if tough_glove.timer >= 3 then
-            tough_glove.phase = "press_z"
-            tough_glove.timer = 0
-            tough_glove.amount_pressed = 0
-            attacks.spawned = false
-            tough_glove.offset = {0, 0}
-        end
-    elseif tough_glove.phase == "press_z" then
-        tough_glove.timer = tough_glove.timer + i
-        if key_state.z.just_pressed then
-            tough_glove.offset = { math.random(-50, 50), math.random(-50, 50)}
-            tough_glove.amount_pressed = tough_glove.amount_pressed + 1
-            sounds["punchweak"]:clone():play()
-        end
-        if tough_glove.timer >= 1 or tough_glove.amount_pressed >= 5 then
-            if tough_glove.timer >= 1 and tough_glove.amount_pressed <= 3 then
-                tough_glove.phase = "press_z"
-                tough_glove.timer = 0
-                tough_glove.amount_pressed = 0
                 attacks.spawned = false
-                tough_glove.offset = {0, 0}
-                bullseye.stage = "missed"
-                enemy:hurt_enemy(player.ii, "missed")
-            else
-                tough_glove.phase = "fist"
-                tough_glove.timer = 0
+                slash.timer = 0
+                local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
+                hit_mult = get_hit_multiplier()
+                local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
+                enemy:hurt_enemy(player.ii, damage)
+                bullseye.stage = "closing"
             end
         end
-    end
+
+        if player.weapon == "tough_glove" then
+            if tough_glove.phase == "fist" then
+                tough_glove.timer = tough_glove.timer + i * 8
+                if tough_glove.timer >= 3.2 then 
+                    tough_glove.phase = "flash"
+                    tough_glove.timer = 0
+                    if tough_glove.amount_pressed >= 3 then
+                        sounds["punchstrong"]:play()
+                    else
+                        sounds["punchweak"]:play()
+                    end
+                    local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
+                    local hit_mult = get_hit_multiplier()
+                    local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
+                    enemy:hurt_enemy(player.ii, damage)
+                    bullseye.stage = "closing"
+                end
+            elseif tough_glove.phase == "flash" then
+                tough_glove.timer = tough_glove.timer + i * 8
+                if tough_glove.timer >= 3 then
+                    tough_glove.phase = "press_z"
+                    tough_glove.timer = 0
+                    tough_glove.amount_pressed = 0
+                    attacks.spawned = false
+                    tough_glove.offset = {0, 0}
+                end
+            elseif tough_glove.phase == "press_z" then
+                tough_glove.timer = tough_glove.timer + i
+                if key_state.z.just_pressed then
+                    tough_glove.offset = { math.random(-50, 50), math.random(-50, 50)}
+                    tough_glove.amount_pressed = tough_glove.amount_pressed + 1
+                    sounds["punchweak"]:clone():play()
+                end
+                if tough_glove.timer >= 1 or tough_glove.amount_pressed >= 5 then
+                    if tough_glove.timer >= 1 and tough_glove.amount_pressed <= 3 then
+                        tough_glove.phase = "press_z"
+                        tough_glove.timer = 0
+                        tough_glove.amount_pressed = 0
+                        attacks.spawned = false
+                        tough_glove.offset = {0, 0}
+                        bullseye.stage = "missed"
+                        enemy:hurt_enemy(player.ii, "missed")
+                    else
+                        tough_glove.phase = "fist"
+                        tough_glove.timer = 0
+                    end
+                end
+            end
+        end
     end
 end
 
@@ -207,6 +228,9 @@ function attacks.draw(i) -- i = dt
     end
 
     if attacks.spawned then
+        if player.weapon == "stick" or player.weapon == "toy_knife" or player.weapon == "real_knife" then
+            love.graphics.draw(slash.image, slash.quads[math.floor(slash.timer % 6) + 1], attacks.x - 30, attacks.y - 110, 0, 2, 2)
+        end
         if player.weapon == "tough_glove" then
             if tough_glove.phase == "fist" then
                 love.graphics.draw(tough_glove.image, tough_glove.quads[math.floor(tough_glove.timer % 3) + 1], attacks.x, attacks.y, 0, 2 + math.abs(math.sin(tough_glove.timer)), 2 + math.abs(math.sin(tough_glove.timer)), select(3, tough_glove.quads[1]:getViewport()) / 2, select(4, tough_glove.quads[1]:getViewport()) / 2)

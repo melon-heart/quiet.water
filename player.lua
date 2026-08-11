@@ -8,7 +8,7 @@ function player.load()
     player.hp = player.mhp 
     player.exp = 0
     player.g = 0
-    player.weapon = "tough_glove" -- stick, toy_knife, tough_glove, ballet_shoes, torn_notebook, burnt_pan, empty_gun, frying_pan, real_knife 
+    player.weapon = "stick" -- only stick, the knifes, and tough_glove are implemented so far -- stick, toy_knife, tough_glove, ballet_shoes, torn_notebook, burnt_pan, empty_gun, frying_pan, real_knife 
     player.armour = "tutu" -- unfortunately, armour does nothing... because i'm too lazy to make it do anything. do it yourself.
 
     player.i = 0 -- selection
