@@ -2,6 +2,7 @@
 local key_state = {
     z = {is_down = false, was_down = false, just_pressed = false},
     x = {is_down = false, was_down = false, just_pressed = false},
+    c = {is_down = false, was_down = false, just_pressed = false},
     up = {is_down = false, was_down = false, just_pressed = false},
     down = {is_down = false, was_down = false, just_pressed = false},
     left = {is_down = false, was_down = false, just_pressed = false},

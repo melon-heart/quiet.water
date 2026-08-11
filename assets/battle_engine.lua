@@ -69,6 +69,19 @@ end
 
 local function move_around(i)
 
+    if key_state.c.just_pressed then
+        key_state.c.just_pressed = false
+        player.i = 0
+        player.ii = 0
+        player.iii = 0
+            table.insert(writers, typewriter.new(
+            55, 268,
+            "* Thanks for using the bug/n  testing...?",
+            fonts["determination-mono"],
+            sounds["speak1"] 
+            ))
+    end
+
     if player.iii == "aim" then
         soul.x = - 16
         soul.y = - 16

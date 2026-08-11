@@ -4,7 +4,7 @@ local enemy = {}
 
 enemy.one = {
     name = "Drama",
-    hp = 100,
+    hp = 200,
     mhp = 200,
     at = 1,
     df = 1,
@@ -96,6 +96,13 @@ function enemy.hurt_enemy(self, target_or_index, ii) -- ii = player damage
     end
     
     if ii ~= "missed" then
+        if target.mercy_percent >= target.mercy_max then
+            target.current_anim = "dusting"
+            target.shake_value = 100
+            target.hp = 0
+            target.alive = false
+            return
+        end
         if target.dodge then
             target.current_anim = "dodge"
             target.shake_value = 100 * (math.random(0, 1) == 0 and -1 or 1)
@@ -103,6 +110,11 @@ function enemy.hurt_enemy(self, target_or_index, ii) -- ii = player damage
             target.current_anim = "hurt"
             target.shake_value = 50
             target.hp = target.hp - ii
+            if target.hp <= 0 then
+                target.current_anim = "dusting"
+                target.hp = 0
+                target.alive = false
+            end
         end
     else
         target.current_anim = target.default_anim

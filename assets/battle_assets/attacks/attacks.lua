@@ -2,41 +2,32 @@
 local attacks = {}
 local bullseye = {}
 local tough_glove = {}
+local slash = {}
 local enemy = nil
 
-local function load_enemy() -- thanks to Asuls!
-    local enemy_module = ("assets.battle_assets.enemies." .. scene.ii .. "." .. scene.ii)
-    package.loaded[enemy_module] = nil
-    return require(enemy_module)
-end
+local function make_quads(image, frame_width, frame_height)
+    local image_width, image_height = image:getDimensions()
+    local quads = {}
 
-local function tough_glove_quantise()
-    local frame_width, frame_height = 50, 110
-    local image_width, image_height = tough_glove.image:getDimensions()
-
-    tough_glove.quads = {}
     for y = 0, image_height - frame_height, frame_height do
         for x = 0, image_width - frame_width, frame_width do
-            local quad = love.graphics.newQuad(x, y, frame_width, frame_height, image_width, image_height)
-            table.insert(tough_glove.quads, quad)
+            quads[#quads + 1] = love.graphics.newQuad(x, y, frame_width, frame_height, image_width, image_height)
         end
     end
+
+    return quads
 end
 
-local function bullseye_quantise()
-    local frame_width, frame_height = 14, 128
-    local image_width, image_height = bullseye.bar:getDimensions()
-
-    bullseye.quads = {}
-    for y = 0, image_height - frame_height, frame_height do
-        for x = 0, image_width - frame_width, frame_width do
-            local quad = love.graphics.newQuad(x, y, frame_width, frame_height, image_width, image_height)
-            table.insert(bullseye.quads, quad)
-        end
-    end
+local function get_hit_multiplier()
+    local target_x = bullseye.x or 320
+    local distance_from_center = math.abs(target_x - 320)
+    local max_distance = 320
+    return math.max(0, 1 - (distance_from_center / max_distance))
 end
 
 function attacks.load(i) -- i = enemy instance
+
+    -- i don't know why you'd want to edit this... but if you truly wish to, please go ahead.
 
     enemy = i
 
@@ -51,10 +42,10 @@ function attacks.load(i) -- i = enemy instance
     bullseye.x = 0 
     bullseye.pressed = false 
     bullseye.open = false
-    bullseye.bar_side = "left" -- or "right"
+    bullseye.bar_side = "left" -- or right blegh
     bullseye.stage = "closed"
 
-    bullseye_quantise()
+    bullseye.quads = make_quads(bullseye.bar, 14, 128)
 
     tough_glove.press = love.graphics.newImage("assets/battle_assets/attacks/press.png")
     tough_glove.z = love.graphics.newImage("assets/battle_assets/attacks/Z.png")
@@ -64,7 +55,12 @@ function attacks.load(i) -- i = enemy instance
     tough_glove.amount_pressed = 0
     tough_glove.offset = {0, 0}
 
-    tough_glove_quantise()
+    tough_glove.quads = make_quads(tough_glove.image, 50, 110)
+
+    slash.image = love.graphics.newImage("assets/battle_assets/attacks/slash.png") -- should be quads of 31x110y
+    slash.timer = 0
+
+    slash.quads = make_quads(slash.image, 31, 110)
 end
 
 function attacks.update(i) -- i = dt
@@ -144,7 +140,10 @@ function attacks.update(i) -- i = dt
             else
                 sounds["punchweak"]:play()
             end
-            enemy:hurt_enemy(player.ii, tough_glove.amount_pressed - 3 * player.total_atk)
+            local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
+            local hit_mult = get_hit_multiplier()
+            local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
+            enemy:hurt_enemy(player.ii, damage)
             bullseye.stage = "closing"
         end
     elseif tough_glove.phase == "flash" then
@@ -222,4 +221,4 @@ function attacks.draw(i) -- i = dt
 end
 
 return attacks
- --They can't see.      hide it in my eyes
+ --They can't see.      hide my eyes

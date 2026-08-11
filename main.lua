@@ -135,6 +135,9 @@ function love.draw()
         drawScene()
     end
     
+    -- i just wanna see fps when bugtesting 
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.setFont(love.graphics.newFont(12))
     love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 10)
 end
 
