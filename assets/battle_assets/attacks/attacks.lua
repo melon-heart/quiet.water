@@ -32,10 +32,10 @@ local function show_damage(i, ii) -- i = damage amount, ii = target x and y
     pdamage.x = ii.x
     pdamage.y = ii.y - 50 
     pdamage.r = 0
-    if pdamage.amount == 0 then
+    if pdamage.amount == "0" then
         pdamage.amount = "MISS"
     elseif ii.mercy_percent >= ii.mercy_max then
-        pdamage.amount = "MAIM"
+        pdamage.amount = "TRUX"
     elseif ii.dodge then
         pdamage.amount = "MISS"
     end
@@ -158,7 +158,7 @@ function attacks.update(i) -- i = dt
     if pdamage.shown then
         pdamage.timer = pdamage.timer + i 
         pdamage.x = pdamage.x 
-        pdamage.y = pdamage.y - 2 + pdamage.timer * 10
+        pdamage.y = pdamage.y - 1 + pdamage.timer * 5
         if pdamage.timer >= 1 then
             pdamage.shown = false
             pdamage.timer = 0
@@ -176,10 +176,14 @@ function attacks.update(i) -- i = dt
                 if slash.phase == 0 then
                     slash.phase = 1
                     local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
-                    hit_mult = get_hit_multiplier()
-                    local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
-                    enemy:hurt_enemy(player.ii, damage)
-                    show_damage(damage, target_enemy)
+                    if target_enemy.hp ~=0 then 
+                        hit_mult = get_hit_multiplier()
+                        local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
+                        show_damage(damage, target_enemy)
+                        enemy:hurt_enemy(player.ii, damage)
+                    else
+                        show_damage(0, target_enemy)
+                    end
                 end
             else
                 attacks.spawned = false
@@ -201,10 +205,16 @@ function attacks.update(i) -- i = dt
                         sounds["punchweak"]:play()
                     end
                     local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
-                    local hit_mult = get_hit_multiplier()
-                    local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
-                    enemy:hurt_enemy(player.ii, damage)
-                    show_damage(damage, target_enemy)
+                    if target_enemy.hp ~=0 then 
+                        local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
+                        local hit_mult = get_hit_multiplier()
+                        local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
+                        show_damage(damage, target_enemy)
+                        enemy:hurt_enemy(player.ii, damage)
+                    else
+                        local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
+                        show_damage(0, target_enemy)
+                    end
                     bullseye.stage = "closing"
                 end
             elseif tough_glove.phase == "flash" then

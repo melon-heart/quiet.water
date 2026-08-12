@@ -1,6 +1,7 @@
 -- template.lua your enemy template! good luck figuring it out...
 
 local enemy = {}
+local dustings = require("assets.battle_assets.enemies.dustings")
 
 enemy.one = {
     name = "Drama",
@@ -60,6 +61,11 @@ local function load_images() -- load the sprites here!
     enemy.dummy0 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy0.png")
         enemy.dummy1 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy1.png")
             enemy.dummy2 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy2.png")
+
+    -- this here is the sprites used while dusting
+    enemy.dust0 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy0.png")
+        enemy.dust1 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy1.png")
+            enemy.dust2 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy2.png")
 end
 
 local function resolve_target(self, target_or_index)
@@ -101,6 +107,7 @@ function enemy.hurt_enemy(self, target_or_index, ii) -- ii = player damage
             target.shake_value = 100
             target.hp = 0
             target.alive = false
+            target.mercy_percent = 0
             return
         end
         if target.dodge then
@@ -123,8 +130,11 @@ function enemy.hurt_enemy(self, target_or_index, ii) -- ii = player damage
 end
 
 local function load_custom_variables() -- load everything you need here
-    enemy.music = love.audio.newSource("assets/battle_assets/music/odd_water.mp3", "stream")
-    enemy.music:setLooping(true)
+    enemy.music = nil --love.audio.newSource("assets/battle_assets/music/odd_water.mp3", "stream")
+    if enemy.music then
+        enemy.music:setVolume(0.5)
+        enemy.music:setLooping(true)
+    end
 
     enemy.one.x = 100
     enemy.one.y = 150
@@ -166,10 +176,8 @@ function enemy.load()
 end
 
 function enemy.update(i) --i = dt
-    if not enemy.music:isPlaying() then
-        if enemy.music then
-            enemy.music:play()
-        end
+    if enemy.music and not enemy.music:isPlaying() then
+        enemy.music:play()
     end
 
     -- this handles damage animations!
