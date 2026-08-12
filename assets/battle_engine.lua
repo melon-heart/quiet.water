@@ -76,7 +76,7 @@ local function move_around(i)
         player.iii = 0
             table.insert(writers, typewriter.new(
             55, 268,
-            "* Thanks for using the bug/n  testing...?",
+            "* Thanks for using the bug/n  testing?",
             fonts["determination-mono"],
             sounds["speak1"] 
             ))
