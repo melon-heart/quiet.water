@@ -4,7 +4,7 @@ local bullseye = {}
 local tough_glove = {}
 local slash = {}
 local enemy = nil
-local damage = {}
+local pdamage = {}
 
 local function make_quads(image, frame_width, frame_height)
     local image_width, image_height = image:getDimensions()
@@ -26,6 +26,22 @@ local function get_hit_multiplier()
     return math.max(0, 1 - (distance_from_center / max_distance))
 end
 
+local function show_damage(i, ii) -- i = damage amount, ii = target x and y
+    pdamage.shown = true
+    pdamage.amount = "" .. i
+    pdamage.x = ii.x
+    pdamage.y = ii.y - 50 
+    pdamage.r = 0
+    if pdamage.amount == 0 then
+        pdamage.amount = "MISS"
+    elseif ii.mercy_percent >= ii.mercy_max then
+        pdamage.amount = "MAIM"
+    elseif ii.dodge then
+        pdamage.amount = "MISS"
+    end
+    pdamage.timer = 0
+end
+
 function attacks.load(i) -- i = enemy instance
 
     -- i don't know why you'd want to edit this... but if you truly wish to, please go ahead.
@@ -36,6 +52,14 @@ function attacks.load(i) -- i = enemy instance
     attacks.y = 0
     attacks.spawned = false
     attacks.phase = "target"
+
+    pdamage.shown = false
+    pdamage.amount = "MISS"
+    pdamage.x = 0 
+    pdamage.y = 0
+    pdamage.r = 0
+    pdamage.timer = 0
+    pdamage.flydir = "right"
 
     bullseye.bullseye = love.graphics.newImage("assets/battle_assets/attacks/bullseye.png")
     bullseye.bar = love.graphics.newImage("assets/battle_assets/attacks/bar.png") -- should be quads of 14x128y
@@ -60,6 +84,7 @@ function attacks.load(i) -- i = enemy instance
 
     slash.image = love.graphics.newImage("assets/battle_assets/attacks/slash.png") -- should be quads of 31x110y
     slash.timer = 0
+    slash.phase = 0 
 
     slash.quads = make_quads(slash.image, 31, 110)
 end
@@ -129,6 +154,16 @@ function attacks.update(i) -- i = dt
             end
         end
     end
+    
+    if pdamage.shown then
+        pdamage.timer = pdamage.timer + i 
+        pdamage.x = pdamage.x 
+        pdamage.y = pdamage.y - 2 + pdamage.timer * 10
+        if pdamage.timer >= 1 then
+            pdamage.shown = false
+            pdamage.timer = 0
+        end
+    end
 
     if attacks.spawned then
 
@@ -138,13 +173,18 @@ function attacks.update(i) -- i = dt
                 if slash.timer >= 5.9 then
                     slash.timer = 5.9
                 end
+                if slash.phase == 0 then
+                    slash.phase = 1
+                    local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
+                    hit_mult = get_hit_multiplier()
+                    local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
+                    enemy:hurt_enemy(player.ii, damage)
+                    show_damage(damage, target_enemy)
+                end
             else
                 attacks.spawned = false
                 slash.timer = 0
-                local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
-                hit_mult = get_hit_multiplier()
-                local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
-                enemy:hurt_enemy(player.ii, damage)
+                slash.phase = 0
                 bullseye.stage = "closing"
             end
         end
@@ -164,6 +204,7 @@ function attacks.update(i) -- i = dt
                     local hit_mult = get_hit_multiplier()
                     local damage = player.calc_damage(target_enemy and target_enemy.df or 0, hit_mult)
                     enemy:hurt_enemy(player.ii, damage)
+                    show_damage(damage, target_enemy)
                     bullseye.stage = "closing"
                 end
             elseif tough_glove.phase == "flash" then
@@ -227,6 +268,16 @@ function attacks.draw(i) -- i = dt
         end
     end
 
+    if pdamage.shown then
+        love.graphics.setColor(255/255, 0/255 ,100/255, 1 - pdamage.timer)
+        if pdamage.amount == "MISS" then
+            love.graphics.setColor(0.863, 0.863, 0.863, 1 - pdamage.timer)
+        end
+        love.graphics.setFont(fonts["hachicro"])
+        love.graphics.print(pdamage.amount, pdamage.x - (#pdamage.amount * 14), pdamage.y, pdamage.r)
+    end
+
+    love.graphics.setColor(1, 1, 1, 1)
     if attacks.spawned then
         if player.weapon == "stick" or player.weapon == "toy_knife" or player.weapon == "real_knife" then
             love.graphics.draw(slash.image, slash.quads[math.floor(slash.timer % 6) + 1], attacks.x - 30, attacks.y - 110, 0, 2, 2)
