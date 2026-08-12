@@ -269,12 +269,20 @@ function attacks.draw(i) -- i = dt
     end
 
     if pdamage.shown then
-        love.graphics.setColor(255/255, 0/255 ,100/255, 1 - pdamage.timer)
+        love.graphics.setFont(fonts["hachicro"])
+        local text_width = fonts["hachicro"]:getWidth(pdamage.amount)
+        local rect_x = pdamage.x - text_width / 2 - 3
+
+        love.graphics.setColor(0, 0, 0, 1 - pdamage.timer)
+        love.graphics.setLineWidth(5)
+        love.graphics.polygon('fill', rect_x, pdamage.y - 3, rect_x + text_width + 2, pdamage.y - 3, rect_x + text_width + 2, pdamage.y + 31, rect_x, pdamage.y + 31)
+
         if pdamage.amount == "MISS" then
             love.graphics.setColor(0.863, 0.863, 0.863, 1 - pdamage.timer)
+        else
+            love.graphics.setColor(1, 0, 100/255, 1 - pdamage.timer)
         end
-        love.graphics.setFont(fonts["hachicro"])
-        love.graphics.print(pdamage.amount, pdamage.x - (#pdamage.amount * 14), pdamage.y, pdamage.r)
+        love.graphics.print(pdamage.amount, pdamage.x, pdamage.y, pdamage.r, 1, 1, text_width / 2, 0)
     end
 
     love.graphics.setColor(1, 1, 1, 1)
