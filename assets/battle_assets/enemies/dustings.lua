@@ -12,7 +12,7 @@ local DEFAULTS = {
     initial_velocity_random = 1.0,
 
     angular_velocity        = 720,
-    gravity_x               = -15, -- 15 if want it to go left
+    gravity_x               = -15,
     gravity_y               = -60,
     linear_accel            = 14.68,
     radial_accel            = -100.0,

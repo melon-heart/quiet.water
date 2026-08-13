@@ -131,7 +131,9 @@ function attacks.update(i) -- i = dt
             if player.weapon then
                 attacks.spawned = true
             end
-            enemy:prepare_for_damage(player.ii)
+            if player.weapon == "tough_glove" then
+                enemy:prepare_for_damage(player.ii)
+            end
         end
 
     else
