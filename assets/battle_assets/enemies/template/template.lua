@@ -19,6 +19,11 @@ enemy.one = {
     mercy_max = 10,
     current_anim = "static",
     default_anim = "static",
+    dust_sprite_path = "assets/battle_assets/enemies/template/images/dummy0_dust.png",
+    -- don't edit under here
+    dust_sprite = nil,
+    sprite_w = nil,
+    sprite_h = nil,
 }
 
 enemy.two = {
@@ -37,6 +42,11 @@ enemy.two = {
     mercy_max = 10,
     current_anim = "static",
     default_anim = "static",
+    dust_sprite_path = "assets/battle_assets/enemies/template/images/dummy1_dust.png",
+    -- don't edit under here
+    dust_sprite = nil,
+    sprite_w = nil,
+    sprite_h = nil,
 }
 
 enemy.three = {
@@ -55,17 +65,30 @@ enemy.three = {
     mercy_max = 99,
     current_anim = "static",
     default_anim = "static",
+    dust_sprite_path = "assets/battle_assets/enemies/template/images/dummy2_dust.png",
+    -- don't edit under here
+    dust_sprite = nil,
+    sprite_w = nil,
+    sprite_h = nil,
 }
 
 local function load_images() -- load the sprites here!
     enemy.dummy0 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy0.png")
         enemy.dummy1 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy1.png")
             enemy.dummy2 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy2.png")
+    
+    -- ignore this
+    enemy.one.dust_sprite = love.image.newImageData(enemy.one.dust_sprite_path)
+        enemy.two.dust_sprite = love.image.newImageData(enemy.two.dust_sprite_path)
+            enemy.three.dust_sprite = love.image.newImageData(enemy.three.dust_sprite_path)
 
-    -- this here is the sprites used while dusting
-    enemy.dust0 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy0.png")
-        enemy.dust1 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy1.png")
-            enemy.dust2 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy2.png")
+    enemy.one.sprite_w = enemy.one.dust_sprite:getWidth()
+    enemy.two.sprite_w = enemy.two.dust_sprite:getWidth()
+    enemy.three.sprite_w = enemy.three.dust_sprite:getWidth()
+
+    enemy.one.sprite_h = enemy.one.dust_sprite:getHeight()
+    enemy.two.sprite_h = enemy.two.dust_sprite:getHeight()
+    enemy.three.sprite_h = enemy.three.dust_sprite:getHeight()
 end
 
 local function resolve_target(self, target_or_index)
@@ -108,6 +131,7 @@ function enemy.hurt_enemy(self, target_or_index, ii) -- ii = player damage
             target.hp = 0
             target.alive = false
             target.mercy_percent = 0
+            dustings.spawn(target.dust_sprite_path, target.x - target.sprite_w / 2, target.y - target.sprite_h / 2)
             return
         end
         if target.dodge then
@@ -121,6 +145,7 @@ function enemy.hurt_enemy(self, target_or_index, ii) -- ii = player damage
                 target.current_anim = "dusting"
                 target.hp = 0
                 target.alive = false
+                dustings.spawn(target.dust_sprite_path, target.x - target.sprite_w / 2 , target.y - target.sprite_h / 2)
             end
         end
     else
@@ -180,6 +205,8 @@ function enemy.update(i) --i = dt
         enemy.music:play()
     end
 
+    dustings.update(i/2)
+
     -- this handles damage animations!
     for _, target in ipairs({enemy.one, enemy.two, enemy.three}) do
         if target.current_anim == "shake" then
@@ -207,6 +234,9 @@ function enemy.update(i) --i = dt
 end
 
 function enemy.draw()
+    
+    dustings.draw(0, 1)
+
     love.graphics.setColor(1, 1, 1, 1)
     if enemy.one.alive then
         love.graphics.draw(enemy.dummy0, enemy.one.x - enemy.dummy0:getWidth() + enemy.one.shake, enemy.one.y - enemy.dummy0:getHeight(), 0, 2, 2)
