@@ -1,7 +1,9 @@
 -- template.lua your enemy template! good luck figuring it out...
 
+-- these are recommended not to delete or modify lol
 local enemy = {}
 local dustings = require("assets.battle_assets.enemies.dustings")
+-- but if you want to require something else, please go ahead~! i don't plan to stop ya
 
 enemy.one = {
     name = "Drama",
@@ -39,7 +41,7 @@ enemy.two = {
     y = nil,
     alive = true,
     dodge = false, 
-    mercy_percent = 10,
+    mercy_percent = 0,
     mercy_max = 10,
     current_anim = "static",
     default_anim = "static",
@@ -63,7 +65,7 @@ enemy.three = {
     y = nil,
     alive = true,
     dodge = true,
-    mercy_percent = 99,
+    mercy_percent = 0,
     mercy_max = 99,
     current_anim = "static",
     default_anim = "static",

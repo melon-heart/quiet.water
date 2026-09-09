@@ -58,6 +58,9 @@ function battle_engine.load()
     end
     
     if player.iii == 0 then
+        if #writers > 0 then
+            writers[#writers]:clear(writers)
+        end
         table.insert(writers, typewriter.new(
             55, 268,
             enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
@@ -69,17 +72,29 @@ end
 
 local function move_around(i)
 
-    if key_state.c.just_pressed then
+    if key_state.c.just_pressed and DEBUG_MODE then
         key_state.c.just_pressed = false
-        player.i = 0
-        player.ii = 0
-        player.iii = 0
+        if #writers > 0 then
+            writers[#writers]:clear(writers)
+        end
+        if player.iii == 0 or player.iii == "button0" or player.iii == "button1" or player.iii == "button2" or player.iii == "button3" then 
             table.insert(writers, typewriter.new(
             55, 268,
-            "* Thanks for using the bug/n  testing?",
+            "* Thanks for using the bug/n  testing?/w/w/w /n* You didn't need that...",
             fonts["determination-mono"],
             sounds["speak1"] 
             ))
+        else
+            table.insert(writers, typewriter.new(
+            55, 268,
+            "* Thanks for using the bug/n  testing!",
+            fonts["determination-mono"],
+            sounds["speak1"] 
+            ))
+        end
+        player.i = 0
+        player.ii = 0
+        player.iii = 0
     end
 
     if player.iii == "aim" then
@@ -133,7 +148,7 @@ local function move_around(i)
             player.iii = 0
                 table.insert(writers, typewriter.new(
                 55, 268,
-                enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
+                enemy.flavour_texts[enemy.turn] or "* No dialogue...",
                 fonts["determination-mono"],
                 sounds["speak1"] 
                 ))
@@ -157,7 +172,31 @@ local function move_around(i)
             player.iii = 0
                 table.insert(writers, typewriter.new(
                 55, 268,
-                enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
+                enemy.flavour_texts[enemy.turn] or "* No dialogue...",
+                fonts["determination-mono"],
+                sounds["speak1"] 
+                ))
+        end
+    elseif player.iii == "button2" then
+        soul.x = 62
+        soul.y = 273 + (player.ii * 38)
+
+        if key_state.down.just_pressed then
+            player.ii = (player.ii + 1) % enemy.amount
+            sounds["squeak"]:play()
+        end
+        if key_state.up.just_pressed then
+            player.ii = (player.ii - 1) % enemy.amount
+            sounds["squeak"]:play()
+        end
+
+        if key_state.x.just_pressed then
+            key_state.x.just_pressed = false
+            player.ii = 0
+            player.iii = 0
+                table.insert(writers, typewriter.new(
+                55, 268,
+                enemy.flavour_texts[enemy.turn] or "* No dialogue...",
                 fonts["determination-mono"],
                 sounds["speak1"] 
                 ))
@@ -187,7 +226,7 @@ local function move_around(i)
             player.iii = 0
                 table.insert(writers, typewriter.new(
                 55, 268,
-                enemy.flavour_texts[enemy.turn] or "* Dude, where's my text?",
+                enemy.flavour_texts[enemy.turn] or "* No dialogue...",
                 fonts["determination-mono"],
                 sounds["speak1"] 
                 ))

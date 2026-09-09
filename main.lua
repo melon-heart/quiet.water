@@ -9,25 +9,13 @@ soul = {}
 scene = {
     i = "battle",
     ii = "template", -- current enemy  
-    iii = "template", -- idfk i actually forgot
+    iii = "template", -- i kinda forgot haha, maybe i'll use it for something in future, maybe it's for overworld dialogue?
     iv = false
 }
 fonts = {}
 sounds = {}
 
-local ripple = {
-    shader  = nil,
-    canvas  = nil,
-    active  = false,
-    elapsed = 0,
-    duration = 2.5,
-    speed          = 2.0,
-    frequency      = 50.0,
-    ripple_rate    = 2.0,
-    rgb_strength   = 6.0,
-    radius         = 0.5,
-    amplitude      = 5,
-}
+DEBUG_MODE = false -- just allows some debugging 
 
 function love.load()
     love.audio.setVolume(0.5)
@@ -56,49 +44,24 @@ function love.load()
     soul.rotation = 0
     if player and player.load then player.load() end
     if battle_engine and battle_engine.load then battle_engine.load() end
-
-    local w, h = love.graphics.getDimensions()
-    ripple.canvas = love.graphics.newCanvas(w, h)
-    ripple.shader = love.graphics.newShader("ripple.glsl")
-
-    ripple.shader:send("frequency",     ripple.frequency)
-    ripple.shader:send("amplitude",     ripple.amplitude)
-    ripple.shader:send("ripple_rate",   ripple.ripple_rate)
-    ripple.shader:send("rgb_strength",  ripple.rgb_strength)
-    ripple.shader:send("radius",        ripple.radius)
-    ripple.shader:send("aspect",        {w, h})
-    ripple.shader:send("center",        {0.5, 0.5})
-    ripple.shader:send("time",          0.0)
 end
 
-function love.keypressed(key)
-    if key == "2" then
-        local cx = math.random()
-        local cy = math.random()
-        ripple.shader:send("center", {cx, cy})
-        ripple.active  = true
-        ripple.elapsed = 0
+function love.keypressed(key) -- for debugging 
+    if DEBUG_MODE then
+        if key == "2" then
+            scene.i = "battle"
+            scene.ii = "template"
+            battle_engine.load()
+        elseif key == "3" then  
+            scene.i = "overworld"
+            scene.ii = nil
+            -- overworld_engine.load()
+        end
     end
 end
 
 function love.update(dt)
     key_state.update(dt)
-
-    if ripple.active then
-        ripple.elapsed = ripple.elapsed + dt
-    
-        ripple.shader:send("time", ripple.elapsed * ripple.speed)
-
-        local t = ripple.elapsed / ripple.duration
-
-        local amp = ripple.amplitude * (1 - t)
-        ripple.shader:send("amplitude", amp)
-    
-        if ripple.elapsed >= ripple.duration then
-            ripple.active  = false
-            ripple.elapsed = 0
-        end
-    end
 
     if scene.i == "battle" then
         battle_engine.update(dt)
@@ -109,7 +72,7 @@ function love.update(dt)
     end
 end
 
-local function drawScene()
+local function draw_scene()
     if scene.i == "battle" then
         battle_engine.draw()
     elseif scene.i == "overworld" then
@@ -122,22 +85,12 @@ end
 function love.draw()
     love.graphics.setColor(1, 1, 1, 1)
 
-    if ripple.active then
-        love.graphics.setCanvas(ripple.canvas)
-        love.graphics.clear()
-        drawScene()
-        love.graphics.setCanvas()
-
-        love.graphics.setShader(ripple.shader)
-        love.graphics.draw(ripple.canvas, 0, 0)
-        love.graphics.setShader()
-    else
-        drawScene()
-    end
+    draw_scene()
     
-    -- i just wanna see fps when bugtesting 
-    love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.setFont(love.graphics.newFont(12))
-    love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 10)
+    if DEBUG_MODE then
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.setFont(love.graphics.newFont(12))
+        love.graphics.print("FPS: " .. love.timer.getFPS() .. "\nDEBUG MODE ENABLED", 10, 10)
+    end
 end
 

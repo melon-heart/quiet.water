@@ -1,4 +1,5 @@
 -- dustings.lua
+-- i really need to work on this... 
 
 local dustings = {}
 dustings.active  = {}
@@ -16,7 +17,7 @@ function dustings.spawn(path, x, y, opts)
 
 end
 
-function dustings.update(dt)
+function dustings.update(i) --  i = dt 
 
 end
 

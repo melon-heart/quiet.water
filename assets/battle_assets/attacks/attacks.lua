@@ -34,7 +34,7 @@ local function show_damage(i, ii) -- i = damage amount, ii = target x and y
     pdamage.r = 0
     if pdamage.amount == "0" then
         pdamage.amount = "MISS"
-    elseif ii.mercy_percent >= ii.mercy_max then
+    elseif ii.mercy_percent >= ii.mercy_max and ii.dodge ~= true then
         pdamage.amount = "TRUX"
     elseif ii.dodge then
         pdamage.amount = "MISS"
@@ -44,7 +44,7 @@ end
 
 function attacks.load(i) -- i = enemy instance
 
-    -- i don't know why you'd want to edit this... but if you truly wish to, please go ahead.
+    -- edit this only if you wish to add your own weapons~! it's kinda... not the greatest system, though! don't force it if it doesn't work out haha
 
     enemy = i
 
