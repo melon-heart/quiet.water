@@ -1,11 +1,10 @@
 # ULengine-v2. W.I.P.
+Hi~!
 This is version 2 of my previous repository, 
 which can be found here: https://github.com/melon-heart/ULENGINE
 
 I am aiming to recreate UNDERTALE's battle and overworld system, but with some modifications for my comfort.
 
-Keep in mind, the code will be sloppy, 
-as it has been a long time since I've coded in LOVE2D.
+Keep in mind, the code will be a bit... Off... Haha, it's been a while since I've properly done anything like this.
 
-For people who want to use this:
-Don't.
+I don't think anyone will use this, but if you wish to, please go ahead! Just credit me, and link the engine~!
