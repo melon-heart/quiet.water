@@ -59,10 +59,9 @@ function attacks.load(i) -- i = enemy instance
     pdamage.y = 0
     pdamage.r = 0
     pdamage.timer = 0
-    pdamage.flydir = "right"
 
-    bullseye.bullseye = love.graphics.newImage("assets/battle_assets/attacks/bullseye.png")
-    bullseye.bar = love.graphics.newImage("assets/battle_assets/attacks/bar.png") -- should be quads of 14x128y
+    bullseye.bullseye = love.graphics.newImage("assets/battle_engine/battle_assets/attacks/bullseye.png")
+    bullseye.bar = love.graphics.newImage("assets/battle_engine/battle_assets/attacks/bar.png") -- should be quads of 14x128y
     bullseye.timer = 0
     bullseye.x = 0 
     bullseye.pressed = false 
@@ -72,9 +71,9 @@ function attacks.load(i) -- i = enemy instance
 
     bullseye.quads = make_quads(bullseye.bar, 14, 128)
 
-    tough_glove.press = love.graphics.newImage("assets/battle_assets/attacks/press.png")
-    tough_glove.z = love.graphics.newImage("assets/battle_assets/attacks/Z.png")
-    tough_glove.image = love.graphics.newImage("assets/battle_assets/attacks/tough_glove.png") -- should be quads of 50x110y
+    tough_glove.press = love.graphics.newImage("assets/battle_engine/battle_assets/attacks/press.png")
+    tough_glove.z = love.graphics.newImage("assets/battle_engine/battle_assets/attacks/Z.png")
+    tough_glove.image = love.graphics.newImage("assets/battle_engine/battle_assets/attacks/tough_glove.png") -- should be quads of 50x110y
     tough_glove.timer = 0
     tough_glove.phase = "press_z"
     tough_glove.amount_pressed = 0
@@ -82,7 +81,7 @@ function attacks.load(i) -- i = enemy instance
 
     tough_glove.quads = make_quads(tough_glove.image, 50, 110)
 
-    slash.image = love.graphics.newImage("assets/battle_assets/attacks/slash.png") -- should be quads of 31x110y
+    slash.image = love.graphics.newImage("assets/battle_engine/battle_assets/attacks/slash.png") -- should be quads of 31x110y
     slash.timer = 0
     slash.phase = 0 
 

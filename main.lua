@@ -1,7 +1,7 @@
 love.graphics.setDefaultFilter('nearest', 'nearest')
 player = require("player")
 key_state = require("assets.key_state")
-battle_engine = require("assets.battle_engine")
+battle_engine = require("assets.battle_engine.battle_engine")
 overworld_engine = require("assets.overworld_engine")
 typewriter = require("assets.typewriter")
 writers = {}
@@ -15,7 +15,7 @@ scene = {
 fonts = {}
 sounds = {}
 
-DEBUG_MODE = false -- just allows some debugging 
+DEBUG_MODE = true -- just allows some debugging 
 
 function love.load()
     love.audio.setVolume(0.5)

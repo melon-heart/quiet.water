@@ -2,7 +2,7 @@
 
 -- these are recommended not to delete or modify lol
 local enemy = {}
-local dustings = require("assets.battle_assets.enemies.dustings")
+local dustings = require("assets.battle_engine.battle_assets.enemies.dustings")
 -- but if you want to require something else, please go ahead~! i don't plan to stop ya
 
 enemy.one = {
@@ -21,7 +21,7 @@ enemy.one = {
     mercy_max = 10,
     current_anim = "static",
     default_anim = "static",
-    hurt_sprite_path = "assets/battle_assets/enemies/template/images/dummy0_dust.png", -- hi! i recommend making these sprites 2x the size of the regular just for a nicer dust effect...
+    hurt_sprite_path = "assets/battle_engine/battle_assets/enemies/template/images/dummy0_dust.png", -- hi! i recommend making these sprites 2x the size of the regular just for a nicer dust effect...
     -- don't edit under here
     hurt_sprite = nil,
     r2d = false,
@@ -45,7 +45,7 @@ enemy.two = {
     mercy_max = 10,
     current_anim = "static",
     default_anim = "static",
-    hurt_sprite_path = "assets/battle_assets/enemies/template/images/dummy1_dust.png",
+    hurt_sprite_path = "assets/battle_engine/battle_assets/enemies/template/images/dummy1_dust.png",
     -- don't edit under here
     hurt_sprite = nil,
     r2d = false,
@@ -69,7 +69,7 @@ enemy.three = {
     mercy_max = 99,
     current_anim = "static",
     default_anim = "static",
-    hurt_sprite_path = "assets/battle_assets/enemies/template/images/dummy2_dust.png",
+    hurt_sprite_path = "assets/battle_engine/battle_assets/enemies/template/images/dummy2_dust.png",
     -- don't edit under here
     hurt_sprite = nil,
     r2d = false,
@@ -78,9 +78,9 @@ enemy.three = {
 }
 
 local function load_images() -- load the sprites here!
-    enemy.dummy0 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy0.png")
-        enemy.dummy1 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy1.png")
-            enemy.dummy2 = love.graphics.newImage("assets/battle_assets/enemies/template/images/dummy2.png")
+    enemy.dummy0 = love.graphics.newImage("assets/battle_engine/battle_assets/enemies/template/images/dummy0.png")
+        enemy.dummy1 = love.graphics.newImage("assets/battle_engine/battle_assets/enemies/template/images/dummy1.png")
+            enemy.dummy2 = love.graphics.newImage("assets/battle_engine/battle_assets/enemies/template/images/dummy2.png")
     
     -- ignore this
     enemy.one.hurt_sprite = love.image.newImageData(enemy.one.hurt_sprite_path)
@@ -170,7 +170,7 @@ function enemy.hurt_enemy(self, target_or_index, ii) -- ii = player damage
 end
 
 local function load_custom_variables() -- load everything you need here
-    enemy.music = nil --love.audio.newSource("assets/battle_assets/music/odd_water.mp3", "stream")
+    enemy.music = nil --love.audio.newSource("assets/battle_engine/battle_assets/music/odd_water.mp3", "stream")
     if enemy.music then
         enemy.music:setVolume(0.5)
         enemy.music:setLooping(true)

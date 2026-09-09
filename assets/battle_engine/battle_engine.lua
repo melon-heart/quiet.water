@@ -3,12 +3,12 @@ local battle_engine = {}
 local enemy = nil
 
 local function load_enemy() -- thanks to Asuls!
-    local enemy_module = ("assets.battle_assets.enemies." .. scene.ii .. "." .. scene.ii)
+    local enemy_module = ("assets.battle_engine.battle_assets.enemies." .. scene.ii .. "." .. scene.ii)
     package.loaded[enemy_module] = nil
     return require(enemy_module)
 end
 
-local attacks = require "assets.battle_assets.attacks.attacks" -- the animations for the player attacks.
+local attacks = require "assets.battle_engine.battle_assets.attacks.attacks" -- the animations for the player attacks.
 
 -- these are default box positionings
 local bullet_box = {
@@ -32,9 +32,10 @@ function battle_engine.load()
     player.i = 0
     player.ii = 0
     player.iii = 0 -- 0 = menu, 1 = fight, 2 = act, 3 = item, 4 = mercy, 5 = enemy turn
+    player.iv = 0 -- this is um. just... the item selected, haha. i don't want to make things too complicated.
 
     for name, _ in pairs(action_ui) do
-        local path = "assets/battle_assets/ui/"
+        local path = "assets/battle_engine/battle_assets/ui/"
         local idx = ({fight = "0.png", act = "1.png", item = "2.png", mercy = "3.png"})[name]
         action_ui[name].img = love.graphics.newImage(path .. idx)
         local w, h = action_ui[name].img:getDimensions()
@@ -263,7 +264,7 @@ local function draw_hp()
 
     local bar_length
     local colour
-    if player.mhp == 1 then
+    if player.mhp == 1 then -- for those papyrus encounter dusttale things... i might remove this actually.
         bar_length = 80
         colour = "grayscale"
     else
@@ -378,6 +379,17 @@ local function draw_text()
                 end
             end
         end
+    end
+
+    if player.iii == "button2" then 
+        love.graphics.setFont(fonts["determination-mono"])
+        -- i just realised i haven't coded any items
+    -- please kill me now 
+
+        love.graphics.print("* " ..  "supposed item", 100, 268)
+        love.graphics.print("* " ..  "supposed item", 100, 268 + 38)
+        love.graphics.print("* " ..  "supposed item", 100, 268 + 38 * 2)
+        
     end
 
     if player.iii == "button3" then 
