@@ -26,6 +26,22 @@ local action_ui = {
     mercy = {},
 }
 
+local item_states = {}
+
+local function lerp(current, target, amount)
+    return current + (target - current) * amount
+end
+
+local function inventory_count()
+    local count = 0
+    for index, item in ipairs(inventory or {}) do
+        if item then
+            count = index
+        end
+    end
+    return count
+end
+
 function battle_engine.load()
 
     -- reset selections
@@ -33,6 +49,7 @@ function battle_engine.load()
     player.ii = 0
     player.iii = 0 -- 0 = menu, 1 = fight, 2 = act, 3 = item, 4 = mercy, 5 = enemy turn
     player.iv = 0 -- this is um. just... the item selected, haha. i don't want to make things too complicated.
+    item_states = {}
 
     for name, _ in pairs(action_ui) do
         local path = "assets/battle_engine/battle_assets/ui/"
@@ -180,14 +197,14 @@ local function move_around(i)
         end
     elseif player.iii == "button2" then
         soul.x = 62
-        soul.y = 273 + (player.ii * 38)
+        soul.y = 273 + 38
 
         if key_state.down.just_pressed then
-            player.ii = (player.ii + 1) % enemy.amount
+            player.ii = (player.ii + 1) % inventory_count()
             sounds["squeak"]:play()
         end
         if key_state.up.just_pressed then
-            player.ii = (player.ii - 1) % enemy.amount
+            player.ii = (player.ii - 1) % inventory_count()
             sounds["squeak"]:play()
         end
 
@@ -237,6 +254,7 @@ end
 
 function battle_engine.update(i) -- i = dt
     move_around(i)
+
     local skip = key_state.x.just_pressed
 
     if writers then
@@ -251,6 +269,26 @@ function battle_engine.update(i) -- i = dt
 
     if enemy and enemy.update then
         enemy.update(i)
+    end
+
+    if player.iii == "button2" then
+        local lerp_amount = math.min(1, i * 12)
+
+        for index, item in ipairs(inventory or {}) do
+            if item then
+                local relative_index = index - player.ii - 1
+                local angle = relative_index * math.pi / 4
+                local state = item_states[index] or {x = 0, y = 0, alpha = 0.1, scale = 0.75}
+                local target_alpha = math.max(0.1, 1 - math.abs(math.sin(angle / 2)) * 0.75)
+                local target_scale = 0.75 + target_alpha * 0.25
+
+                state.x = lerp(state.x, (1 - math.cos(angle)) * 38, lerp_amount)
+                state.y = lerp(state.y, math.max(-38, math.min(38, math.sin(angle) * 38)), lerp_amount)
+                state.alpha = lerp(state.alpha, target_alpha, lerp_amount)
+                state.scale = lerp(state.scale, target_scale, lerp_amount)
+                item_states[index] = state
+            end
+        end
     end
 end
 
@@ -383,12 +421,15 @@ local function draw_text()
 
     if player.iii == "button2" then 
         love.graphics.setFont(fonts["determination-mono"])
-        -- i just realised i haven't coded any items
-    -- please kill me now 
-
-        love.graphics.print("* " ..  "supposed item", 100, 268)
-        love.graphics.print("* " ..  "supposed item", 100, 268 + 38)
-        love.graphics.print("* " ..  "supposed item", 100, 268 + 38 * 2)
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.print(player.ii + 1, 560, 268 + 38)
+        for index, item in ipairs(inventory or {}) do
+            local state = item_states[index]
+            if item and state then
+                love.graphics.setColor(1, 1, 1, state.alpha)
+                love.graphics.print("* " .. item, 100 + state.x, 268 + 38 + state.y, 0, state.scale, state.scale)
+            end
+        end
         
     end
 

@@ -6,6 +6,7 @@ overworld_engine = require("assets.overworld_engine")
 typewriter = require("assets.typewriter")
 writers = {}
 soul = {}
+items = require("assets.items")
 scene = {
     i = "battle",
     ii = "template", -- current enemy  
@@ -18,6 +19,8 @@ sounds = {}
 DEBUG_MODE = true -- just allows some debugging 
 
 function love.load()
+    -- love.graphics.setBackgroundColor(0.3, 0.2, 0.5) -- remove this if you want black... or set all to 0
+
     love.audio.setVolume(0.5)
     math.randomseed(os.time() + os.clock() * 1000000)
     fonts["8bitoperator_jve"] = love.graphics.newFont("assets/fonts/8bitoperator_jve.ttf", 32)
