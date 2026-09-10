@@ -282,7 +282,7 @@ function battle_engine.update(i) -- i = dt
                 local target_alpha = math.max(1 - math.abs(math.sin(angle / 2)) * 1)
                 local target_scale = 0.55 + target_alpha * 0.45
 
-                state.x = lerp(state.x, (1 - math.cos(angle)) * 38, lerp_amount)
+                state.x = lerp(state.x, (1 - math.cos(angle)) * 68, lerp_amount)
                 state.y = lerp(state.y, math.max(-38, math.min(38, math.sin(angle) * 42)), lerp_amount)
                 state.alpha = lerp(state.alpha, target_alpha, lerp_amount)
                 state.scale = lerp(state.scale, target_scale, lerp_amount)
@@ -332,8 +332,10 @@ end
 
 
 local function draw_soul()
-    love.graphics.setColor(255/255, 0/255 ,100/255, 1)
-    love.graphics.draw(soul.image, soul.x, soul.y, soul.rotation, 2, 2)
+    if player.iii ~= "button2" then
+        love.graphics.setColor(255/255, 0/255 ,100/255, 1)
+        love.graphics.draw(soul.image, soul.x, soul.y, soul.rotation, 2, 2)
+    end
 end
 
 local function draw_bullet_box()
@@ -428,6 +430,10 @@ local function draw_text()
             if item and state then
                 love.graphics.setColor(1, 1, 1, state.alpha)
                 love.graphics.print("* " .. item, 100 + state.x, 268 + 38 + 20 + state.y * 1.2 - state.scale * 20, 0, state.scale, state.scale)
+                if player.ii + 1 == index then
+                    love.graphics.setColor(255/255, 0/255 ,100/255, state.alpha)
+                    love.graphics.draw(soul.image, soul.x + state.x, soul.y + state.y * 1.2 , soul.rotation, state.scale * 2, state.scale * 2)
+                end
             end
         end
         
