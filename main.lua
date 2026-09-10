@@ -22,7 +22,7 @@ function love.load()
     -- love.graphics.setBackgroundColor(0.3, 0.2, 0.5) -- remove this if you want black... or set all to 0
 
     love.audio.setVolume(0.5)
-    math.randomseed(os.time() + os.clock() * 1000000)
+    math.randomseed(os.time() + os.clock() * 1000000) -- just because random modifiers don't work otherwise, random generators are kinda like math.rand() and they actually base it off of the randomseed so if you have a random modifier it will always be the same pattern each time most likely
     fonts["8bitoperator_jve"] = love.graphics.newFont("assets/fonts/8bitoperator_jve.ttf", 32)
     fonts["dotumche"] = love.graphics.newFont("assets/fonts/dotumche.ttf")
     fonts["determination-mono"] = love.graphics.newFont("assets/fonts/determination-mono.ttf", 32)
@@ -34,6 +34,7 @@ function love.load()
     fonts["sans2"] = love.graphics.newFont("assets/fonts/sans.ttf", 32)
     fonts["ja_JF-Dot-Shinonome14"] = love.graphics.newFont("assets/fonts/ja/JF-Dot-Shinonome14.ttf")
     fonts["ja_TanukiMagic"] = love.graphics.newFont("assets/fonts/ja/TanukiMagic.ttf")
+    
     sounds["speak0"] = love.audio.newSource("assets/sounds/v_generic1.ogg", "static")
     sounds["speak1"] = love.audio.newSource("assets/sounds/v_generic2.ogg", "static")
     sounds["squeak"] = love.audio.newSource("assets/sounds/snd_squeak.ogg", "static")
