@@ -279,11 +279,11 @@ function battle_engine.update(i) -- i = dt
                 local relative_index = index - player.ii - 1
                 local angle = relative_index * math.pi / 4
                 local state = item_states[index] or {x = 0, y = 0, alpha = 0.1, scale = 0.75}
-                local target_alpha = math.max(0.1, 1 - math.abs(math.sin(angle / 2)) * 0.75)
-                local target_scale = 0.75 + target_alpha * 0.25
+                local target_alpha = math.max(1 - math.abs(math.sin(angle / 2)) * 1)
+                local target_scale = 0.55 + target_alpha * 0.45
 
                 state.x = lerp(state.x, (1 - math.cos(angle)) * 38, lerp_amount)
-                state.y = lerp(state.y, math.max(-38, math.min(38, math.sin(angle) * 38)), lerp_amount)
+                state.y = lerp(state.y, math.max(-38, math.min(38, math.sin(angle) * 40)), lerp_amount)
                 state.alpha = lerp(state.alpha, target_alpha, lerp_amount)
                 state.scale = lerp(state.scale, target_scale, lerp_amount)
                 item_states[index] = state
@@ -427,7 +427,7 @@ local function draw_text()
             local state = item_states[index]
             if item and state then
                 love.graphics.setColor(1, 1, 1, state.alpha)
-                love.graphics.print("* " .. item, 100 + state.x, 268 + 38 + state.y, 0, state.scale, state.scale)
+                love.graphics.print("* " .. item, 100 + state.x, 268 + 38 + 20 + state.y * 1.2 - state.scale * 20, 0, state.scale, state.scale)
             end
         end
         
