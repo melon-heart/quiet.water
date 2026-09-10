@@ -283,7 +283,7 @@ function battle_engine.update(i) -- i = dt
                 local target_scale = 0.55 + target_alpha * 0.45
 
                 state.x = lerp(state.x, (1 - math.cos(angle)) * 38, lerp_amount)
-                state.y = lerp(state.y, math.max(-38, math.min(38, math.sin(angle) * 40)), lerp_amount)
+                state.y = lerp(state.y, math.max(-38, math.min(38, math.sin(angle) * 42)), lerp_amount)
                 state.alpha = lerp(state.alpha, target_alpha, lerp_amount)
                 state.scale = lerp(state.scale, target_scale, lerp_amount)
                 item_states[index] = state
