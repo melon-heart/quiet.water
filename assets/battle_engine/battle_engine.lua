@@ -271,7 +271,7 @@ function battle_engine.update(i) -- i = dt
         enemy.update(i)
     end
 
-    if player.iii == "button2" then
+    if player.iii == "button2" then -- this is the item list! please don't modify this unless you want to like... make your own item listing engine, haha. this is just a general item lister. should work with all languages
         local lerp_amount = math.min(1, i * 12)
 
         for index, item in ipairs(inventory or {}) do
