@@ -65,7 +65,7 @@ function love.keypressed(key) -- for debugging
 end
 
 function love.update(dt)
-    key_state.update(dt)
+    key_state.update()
 
     if scene.i == "battle" then
         battle_engine.update(dt)
