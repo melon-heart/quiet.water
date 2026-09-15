@@ -330,7 +330,6 @@ local function draw_hp()
     love.graphics.rectangle("fill", 275, 400, bar_length * fill_ratio * 1.2, 21)
 end
 
-
 local function draw_soul()
     if player.iii ~= "button2" then
         love.graphics.setColor(255/255, 0/255 ,100/255, 1)
