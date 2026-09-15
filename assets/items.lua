@@ -90,19 +90,19 @@ local item_lists = {
         "consumable", "consumable", "consumable", "armor"
     },
     item_heal_amount = {
-        10, 15, 0, 10, 1, -- 1 Monster Candy, 2 Croquet Roll, 3 Stick, 4 Bandage, 5 Rock Candy
+        10, 15, 0, 0, 1, -- 1 Monster Candy, 2 Croquet Roll, 3 Stick, 4 Bandage (armor), 5 Rock Candy
         8, 12, 5, 16, 24, -- 6 Pumpkin Rings, 7 Spider Donut, 8 Stoic Onion, 9 Ghost Fruit, 10 Spider Cider
         "ALL", 0, 0, 0, 0, -- 11 Butterscotch Pie (full heal), 12 Faded Ribbon, 13 Toy Knife, 14 Tough Glove, 15 Manly Bandanna
         45, 15, 28, 11, 11, -- 16 Snowman Piece, 17 Nice Cream, 18 Puppydough Icecream, 19 Bisicle, 20 Unisicle
         22, 2, 34, 0, 0, -- 21 Cinnamon Bun, 22 Temmie Flakes, 23 Abandoned Quiche, 24 Old Tutu, 25 Ballet Shoes
-        0, 0, {2, 10, 30, "ALL"}, 0, 0, -- 26 Punch Card (no heal, +2-6 AT for a battle), 27 Annoying Dog, 28 Dog Salad (random), 29-30 Dog Residue
+        0, 0, {2, 10, 30, "ALL"}, 0, 0, -- 26 Punch Card (no heal, +2-6 AT for a battle), 27 Annoying Dog, 28 Dog Salad  (random), 29-30Dog Residue
         0, 0, 0, 0, 21, -- 31-34 Dog Residue, 35 Astronaut Food
         4, 18, 20, 21, 27, -- 36 Instant Noodles (4 in battle; see note), 37 Crab Apple, 38 Hot Dog...?, 39 Hot Cat, 40 Glamburger
         10, 14, 40, 0, 0, -- 41 Sea Tea (+SPEED), 42 Starfait, 43 Legendary Hero (+4 AT), 44 Cloudy Glasses, 45 Torn Notebook
-        1, 0, 0, 0, 0, -- 46 Stained Apron (1 HP/other turn), 47 Burnt Pan, 48 Cowboy Hat, 49 Empty Gun, 50 Heart Locket
+        0, 0, 0, 0, 0, -- 46 Stained Apron (armor), 47 Burnt Pan, 48 Cowboy Hat, 49 Empty Gun, 50 Heart Locket
         0, 0, 0, -1, 17, -- 51 Worn Dagger, 52 Real Knife, 53 The Locket, 54 Bad Memory (drains 1 HP, heals ALL if HP<=3), 55 Dream
-        0, 0, 13, 17, 0, -- 56 Undyne's Letter, 57 Undyne's Letter EX, 58 Popato Chisps, 59 Junk Food, 60 Mystery Key
-        60, 65, "MAX-1", 1 -- 61 Face Steak, 62 Hush Puppy, 63 Snail Pie (full HP minus 1), 64 Temmie Armor (1 HP/other turn)
+        0, 0, 13, 17, 0,  -- 56 Undyne's Letter, 57 Undyne's Letter EX, 58 Popato Chisps, 59 Junk Food, 60 Mystery Key
+        60, 65, "MAX-1", 0 -- 61 Face Steak, 62 Hush Puppy, 63 Snail Pie (full HP minus 1), 64 Temmie Armor (armor)
     },
     item_used_text_normal = { -- it works by having custom text first, and then adds the default text at the end.
         "You ate the Monster Candy."
