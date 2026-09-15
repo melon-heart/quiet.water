@@ -1,7 +1,5 @@
 -- dustings.lua
--- i really need to work on this...
-
--- local json      = require("json")
+-- credit to Isla for creating this
 
 local dustings  = {}
 dustings.active = {}
@@ -37,8 +35,8 @@ function dustings.make_particles(points, offset_x, offset_y, spread, speed)
 
     for y = 1, #points do
         for x = 1, #points[y] do
-            local sx = x + offset_x
-            local sy = y + offset_y
+            local sx = x*2 + offset_x
+            local sy = y*2 + offset_y
 
             output[#output + 1] = {
                 color = points[y][x],
@@ -64,8 +62,6 @@ function dustings.draw_particles(particles, time, decay)
     for pi = 1, #particles do
         local particle = particles[pi]
 
-        -- print(json.encode(particle))
-
         local p_time = math.max(0, time - particle.start)
 
         local x = particle.x
@@ -80,6 +76,7 @@ function dustings.draw_particles(particles, time, decay)
         }
     end
 
+    love.graphics.setPointSize(2.0)
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.points(points)
 end

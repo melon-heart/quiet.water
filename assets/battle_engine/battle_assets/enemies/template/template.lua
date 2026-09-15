@@ -119,7 +119,7 @@ local function dust(target)
     target.hp = 0
     target.alive = false
     target.r2d = false
-    dustings.spawn(target.hurt_sprite_path, target.x - target.sprite_w / 2, target.y - target.sprite_h / 2.0, 25.0, 4.0,
+    dustings.spawn(target.hurt_sprite_path, target.x - target.sprite_w / 1, target.y - target.sprite_h / 1.0, 25.0, 4.0,
         1.2, 1.0)
 end
 
