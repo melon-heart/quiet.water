@@ -176,6 +176,7 @@ function attacks.update(i) -- i = dt
                 end
                 if slash.phase == 0 then
                     slash.phase = 1
+                    sounds["laz"]:play()
                     local target_enemy = ({ enemy.one, enemy.two, enemy.three })[player.ii + 1]
                     if target_enemy.hp ~=0 then 
                         hit_mult = get_hit_multiplier()

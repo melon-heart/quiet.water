@@ -19,7 +19,7 @@ sounds = {}
 DEBUG_MODE = true -- just allows some debugging 
 
 function love.load()
-    love.graphics.setBackgroundColor(30 / 255, 63 / 255, 102 / 255) -- remove this if you want black... or set all to 0
+    --love.graphics.setBackgroundColor(30 / 255, 63 / 255, 102 / 255) -- remove this if you want black... or set all to 0
 
     love.audio.setVolume(0.5)
     math.randomseed(os.time() + os.clock() * 1000000) -- just because random modifiers don't work otherwise, random generators are kinda like math.rand() and they actually base it off of the randomseed so if you have a random modifier it will always be the same pattern each time most likely
@@ -41,6 +41,7 @@ function love.load()
     sounds["select"] = love.audio.newSource("assets/sounds/snd_select.ogg", "static")
     sounds["punchstrong"] = love.audio.newSource("assets/sounds/snd_punchstrong.wav", "static")
     sounds["punchweak"] = love.audio.newSource("assets/sounds/snd_punchweak.wav", "static")
+    sounds["laz"] = love.audio.newSource("assets/sounds/snd_laz.wav", "static")
 
     soul.image = love.graphics.newImage("assets/images/soul.png")
     soul.x = 0

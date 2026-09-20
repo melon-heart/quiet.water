@@ -14,6 +14,8 @@ I'm making this engine out of pure hatred
 
 Any and all resources that aren't made by Temmie Chang or Toby Fox, or are fonts... are made by s_lfurica probably...
 
+Isla made the dustings.lua (the monster dusting effect)
+
 In future, i may make a Japanese version of this engine for those who want it~! 
 
 Thanks for reading, and be sure to stay tuned.
