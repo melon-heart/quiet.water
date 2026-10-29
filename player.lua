@@ -5,7 +5,7 @@ function player.load()
     player.name = "melon"
     player.lv = 8
     player.mhp = 16 + (player.lv * 4)
-    player.hp = player.mhp 
+    player.hp = 1
     player.exp = 0
     player.g = 0
     player.weapon = "tough_glove" -- only stick, the knifes, and tough_glove are implemented so far -- stick, toy_knife, tough_glove, ballet_shoes, torn_notebook, burnt_pan, empty_gun, frying_pan, real_knife 
@@ -46,10 +46,17 @@ end
 
 function player.update(i, ii, iii, iv, v) -- i = hp amount changed, ii = exp gained, iii = g gained, iv = item gained, v = item eaten
     if i ~= 0 then
-        player.hp = player.hp + i 
+        if i ~= "ALL" then
+            player.hp = player.hp + i 
+        else
+            player.hp = player.mhp 
+        end
+        local response = "You recovered " .. i .. " HP!"
         if player.hp >= player.mhp then 
             player.hp = player.mhp
+            response = "Your HP was maxed out."  
         end
+        return response
     end
 end 
 

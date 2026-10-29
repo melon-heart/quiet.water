@@ -1,4 +1,24 @@
 love.graphics.setDefaultFilter('nearest', 'nearest')
+
+function to_roman(number)
+    local numerals = {
+        {1000, "m"}, {900, "cm"}, {500, "d"}, {400, "cd"},
+        {100, "c"}, {90, "xc"}, {50, "l"}, {40, "xl"},
+        {10, "x"}, {9, "ix"}, {5, "v"}, {4, "iv"}, {1, "i"}
+    }
+
+    local result = ""
+    for _, pair in ipairs(numerals) do
+        local value, symbol = pair[1], pair[2]
+        while number >= value do
+            result = result .. symbol
+            number = number - value
+        end
+    end
+
+    return result
+end
+
 player = require("player")
 key_state = require("assets.key_state")
 battle_engine = require("assets.battle_engine.battle_engine")
@@ -93,9 +113,9 @@ function love.draw()
     draw_scene()
     
     if DEBUG_MODE then
-        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.setColor(0.5, 0.5, 1, 1) 
         love.graphics.setFont(love.graphics.newFont(12))
-        love.graphics.print("FPS: " .. love.timer.getFPS() .. "\nDEBUG MODE ENABLED", 10, 10)
+        love.graphics.print("FPS: " .. love.timer.getFPS() .. "\nDEBUG MODE ENABLED" .."\nplayer.i = " .. player.i .."\nplayer.ii = " .. player.ii .."\nplayer.iii = " .. player.iii  , 10, 10)
     end
 end
 

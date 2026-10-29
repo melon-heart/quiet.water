@@ -89,7 +89,7 @@ local item_lists = {
         "misc", "misc", "consumable", "consumable", "misc",
         "consumable", "consumable", "consumable", "armor"
     },
-    item_heal_amount = {
+    heal = {
         10, 15, 0, 0, 1, -- 1 Monster Candy, 2 Croquet Roll, 3 Stick, 4 Bandage (armor), 5 Rock Candy
         8, 12, 5, 16, 24, -- 6 Pumpkin Rings, 7 Spider Donut, 8 Stoic Onion, 9 Ghost Fruit, 10 Spider Cider
         "ALL", 0, 0, 0, 0, -- 11 Butterscotch Pie (full heal), 12 Faded Ribbon, 13 Toy Knife, 14 Tough Glove, 15 Manly Bandanna
@@ -104,32 +104,23 @@ local item_lists = {
         0, 0, 13, 17, 0,  -- 56 Undyne's Letter, 57 Undyne's Letter EX, 58 Popato Chisps, 59 Junk Food, 60 Mystery Key
         60, 65, "MAX-1", 0 -- 61 Face Steak, 62 Hush Puppy, 63 Snail Pie (full HP minus 1), 64 Temmie Armor (armor)
     },
-    item_used_text_normal = { -- it works by having custom text first, and then adds the default text at the end.
-        "You ate the Monster Candy."
+    normal_text = { -- it works by having custom text first, and then adds the amount healed with uhh code or whatever.
+        "* You ate the Monster Candy. /w/n* Distinctively sweet-sour.",
+        "* You hit the Croquet Roll into/n  your mouth. /w/n* You ate the Croquet Roll.",
+        "* You equipped the Stick.",
+        "* You re-applied the bandage. /w/n* Still kind of gooey.",
+        "* You ate the Rock Candy.",
+        "* You ate the Pumpkin Rings.",
+        "* You ate the Spider Donut. /w/n* Don't worry, Spider didn't.",
+        "* You ate the Stoic Onion. /w/n* You didn't cry...",
+        "* You ate the Ghost Fruit.",
+        "* You drank the Spider Cider.",
+        "* You ate the Butterscotch Pie.",
     },
-    item_used_text_serious = {
-        "You ate the Monster Candy."
+    serious_text = {
+        "* You ate the Monster Candy."
     }
 }
-
-local function to_roman(number)
-    local numerals = {
-        {1000, "m"}, {900, "cm"}, {500, "d"}, {400, "cd"},
-        {100, "c"}, {90, "xc"}, {50, "l"}, {40, "xl"},
-        {10, "x"}, {9, "ix"}, {5, "v"}, {4, "iv"}, {1, "i"}
-    }
-
-    local result = ""
-    for _, pair in ipairs(numerals) do
-        local value, symbol = pair[1], pair[2]
-        while number >= value do
-            result = result .. symbol
-            number = number - value
-        end
-    end
-
-    return result
-end
 
 local function build_group(values)
     local group = {}
@@ -143,7 +134,9 @@ items = {
     full = build_group(item_lists.full),
     short = build_group(item_lists.short),
     serious = build_group(item_lists.serious),
-    descriptions = build_group(item_lists.descriptions)
+    descriptions = build_group(item_lists.descriptions),
+    normal_text = build_group(item_lists.normal_text),
+    heal = build_group(item_lists.heal),
 }
 
 for index, value in ipairs(item_lists.full) do

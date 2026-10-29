@@ -120,6 +120,11 @@ local function move_around(i)
         soul.y = - 16
     end
 
+    if player.iii == "eating..." then
+        soul.x = - 16
+        soul.y = - 16
+    end
+
     if player.iii == "enemy_dialogue" then
         soul.x = bullet_box.x - 8
         soul.y = bullet_box.y - 8
@@ -208,6 +213,27 @@ local function move_around(i)
             sounds["squeak"]:play()
         end
 
+        if key_state.z.just_pressed then
+            local selected_item = inventory[player.ii + 1]
+            local item_key = nil
+            for key, name in pairs(items.full) do
+                if name == selected_item then
+                    item_key = key
+                    break
+                end
+            end
+            local response = player.update(items.heal[item_key])
+                table.insert(writers, typewriter.new(
+                55, 268,
+                items.normal_text[item_key] .. "/n* " .. response or "* No dialogue for this item!" .. "/n* " .. response,
+                fonts["determination-mono"],
+                sounds["speak1"] 
+                ))
+            table.remove(inventory, player.ii + 1)
+            player.i = -1
+            player.ii = 0
+            player.iii = "eating..."
+        end 
         if key_state.x.just_pressed then
             key_state.x.just_pressed = false
             player.ii = 0
