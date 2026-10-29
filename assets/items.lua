@@ -143,6 +143,6 @@ for index, value in ipairs(item_lists.full) do
     items[to_roman(index)] = value
 end
 
-inventory = {items.i, items.i, items.i, items.x, items.xi, items.x, items.x, items.x} -- max of 8 please! while we could do higher, i'd rather not.
+inventory = {items.i, items.i, items.iii, items.x, items.xi, items.x, items.x, items.x} -- max of 8 please! while we could do higher, i'd rather not.
 
 return items
